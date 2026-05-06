@@ -69,11 +69,11 @@ CATATAN: Sudah ada internal pull-up di GPIO23.
 ### D. Layout Pin Raspberry Pi 4 (yang dipakai):
 
 ```
-                    3V3  (1) (2)  5V  ← LCD & HX711 VCC
-           SDA1 GPIO2  (3) (4)  
-           SCL1 GPIO3  (5) (6)  GND 
+                 3V3  (1) (2)  5V  ← LCD & HX711 VCC
+          SDA1 GPIO2  (3) (4)  
+          SCL1 GPIO3  (5) (6)  GND 
                       (7) (8)
-              GND (9)(10)
+                  GND (9)(10)
                      (11)(12)  GPIO17  ← HX711 DT/DOUT
                      (13)(14)  HX711 SCK GPIO27
                      (15)(16)  GPIO22  ← Push Button
