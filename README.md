@@ -1,5 +1,5 @@
 # TIMBANGAN DIGITAL - Raspberry Pi 4
-### Konversi dari ESP32 (C++) → Raspberry Pi 4 (Python)
+### Raspberry Pi 4 (Python)
 
 ---
 
@@ -39,8 +39,8 @@ HX711          Raspberry Pi 4
 ------         ---------------
 VCC    ───────  Pin 2  (5V Power)
 GND    ───────  Pin 6  (GND)
-DT     ───────  Pin 12 (GPIO18)
-SCK    ───────  Pin 35 (GPIO19)
+DT     ───────  Pin 11 (GPIO17)
+SCK    ───────  Pin 13 (GPIO27)
 ```
 
 ### B. LCD I2C 16x2 → Raspberry Pi 4
@@ -59,7 +59,7 @@ SCL    ───────  Pin 5  (GPIO3 / SCL1)
 ```
 Push Button    Raspberry Pi 4
 -----------    ---------------
-Kaki 1 ───────  Pin 16 (GPIO23)
+Kaki 1 ───────  Pin 15 (GPIO22)
 Kaki 2 ───────  Pin 14 (GND)
 
 CATATAN: Sudah ada internal pull-up di GPIO23.
@@ -70,22 +70,22 @@ CATATAN: Sudah ada internal pull-up di GPIO23.
 
 ```
                     3V3  (1) (2)  5V  ← LCD & HX711 VCC
-           SDA1 GPIO2  (3) (4)  5V
-           SCL1 GPIO3  (5) (6)  GND  ← HX711 & LCD GND
+           SDA1 GPIO2  (3) (4)  
+           SCL1 GPIO3  (5) (6)  GND 
                       (7) (8)
               GND (9)(10)
-                     (11)(12)  GPIO18  ← HX711 DT/DOUT
-                     (13)(14)  GND     ← Button GND
-                     (15)(16)  GPIO23  ← Push Button
+                     (11)(12)  GPIO17  ← HX711 DT/DOUT
+                     (13)(14)  HX711 SCK GPIO27
+                     (15)(16)  GPIO22  ← Push Button
                      (17)(18)
                      (19)(20)
                      (21)(22)
                      (23)(24)
-              GND   (25)(26)
+                     (25)(26)
                      (27)(28)
                      (29)(30)
                      (31)(32)
-    HX711 SCK GPIO19 (35)(34)  GND
+                     (35)(34)
 ```
 
 ### E. Wiring Load Cell ke HX711:
@@ -101,22 +101,7 @@ Putih   ───── A-  (Signal -)
 ```
 
 ---
-
-## 3. PERBANDINGAN PIN ESP32 vs RPi4 <a name="perbandingan"></a>
-
-| Fungsi | ESP32 Pin | RPi4 GPIO | RPi4 Pin Fisik |
-|---|---|---|---|
-| HX711 DOUT | GPIO18 | GPIO18 | Pin 12 |
-| HX711 SCK | GPIO19 | GPIO19 | Pin 35 |
-| Push Button | GPIO23 | GPIO23 | Pin 16 |
-| LCD SDA | GPIO21 (default I2C) | GPIO2 (SDA1) | Pin 3 |
-| LCD SCL | GPIO22 (default I2C) | GPIO3 (SCL1) | Pin 5 |
-
-> **Catatan:** Pin GPIO18, 19, 23 dipilih sama dengan ESP32 agar mudah diingat. Untuk I2C (LCD), Raspberry Pi menggunakan pin I2C hardware yang sudah fixed di GPIO2 (SDA) dan GPIO3 (SCL).
-
----
-
-## 4. INSTALASI LIBRARY <a name="instalasi"></a>
+## 3. INSTALASI LIBRARY <a name="instalasi"></a>
 
 ### Langkah 1: Aktifkan I2C di Raspberry Pi
 
@@ -168,7 +153,7 @@ lcd = CharLCD(
 
 ---
 
-## 5. KONFIGURASI GOOGLE APPS SCRIPT <a name="google-script"></a>
+## 4. KONFIGURASI GOOGLE APPS SCRIPT <a name="google-script"></a>
 
 Google Apps Script sudah dikonfigurasi (ID sama dengan ESP32). Pastikan Web App sudah di-deploy dengan pengaturan:
 - **Execute as:** Me
@@ -270,17 +255,3 @@ Ikuti instruksi di layar:
 | Tombol tidak respons | Cek wiring GPIO23, pastikan ke GND saat ditekan |
 
 ---
-
-## PERBEDAAN UTAMA ESP32 vs Raspberry Pi 4
-
-| Aspek | ESP32 (C++) | Raspberry Pi 4 (Python) |
-|---|---|---|
-| Bahasa | C++ (Arduino framework) | Python 3 |
-| WiFi | Built-in, dikonfigurasi di kode | Built-in, dikonfigurasi via OS (raspi-config/nmcli) |
-| I2C LCD | `LiquidCrystal_I2C` library | `RPLCD` library |
-| HX711 | `HX711_ADC` library | `hx711` library (Python) |
-| HTTP Request | `HTTPClient` | `requests` library |
-| GPIO | `digitalRead/Write` | `RPi.GPIO` library |
-| Timing | `millis()` | `time.time()` |
-| Pull-up | `INPUT_PULLUP` | `GPIO.PUD_UP` |
-| Debounce | `delay(50)` | `time.sleep(0.05)` |
