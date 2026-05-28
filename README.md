@@ -225,10 +225,10 @@ sudo systemctl status timbangan
 
 ## 7. KALIBRASI LOAD CELL <a name="kalibrasi"></a>
 
-Nilai default `CALIBRATION_FACTOR = 23.95` diambil dari kode ESP32. **Setiap load cell berbeda**, jadi sangat disarankan kalibrasi ulang:
+`CALIBRATION_FACTOR = ...`. **Setiap load cell berbeda**
 
 ```bash
-python3 kalibrasi.py
+python3 scripts/kalibrasi.py
 ```
 
 Ikuti instruksi di layar:
