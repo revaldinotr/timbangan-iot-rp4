@@ -155,27 +155,16 @@ lcd = CharLCD(
 
 ## 4. KONFIGURASI GOOGLE APPS SCRIPT <a name="google-script"></a>
 
-Google Apps Script sudah dikonfigurasi (ID sama dengan ESP32). Pastikan Web App sudah di-deploy dengan pengaturan:
+Pastikan Web App sudah di-deploy dengan pengaturan:
 - **Execute as:** Me
 - **Who has access:** Anyone
 
 Jika ingin membuat baru:
 1. Buka [script.google.com](https://script.google.com)
 2. Buat project baru
-3. Salin kode Apps Script berikut:
-
-```javascript
-function doGet(e) {
-  var berat = e.parameter.berat;
-  var sheet = SpreadsheetApp.openById("ID_SPREADSHEET_ANDA").getActiveSheet();
-  var now = new Date();
-  sheet.appendRow([now, berat + " Kg"]);
-  return ContentService.createTextOutput("OK: " + berat + " Kg berhasil disimpan.");
-}
-```
-
+3. Salin kode Apps Script pada directory scripts
 4. Deploy → New deployment → Web App
-5. Salin ID dari URL dan update `GOOGLE_SCRIPT_ID` di `timbangan.py`
+5. Salin ID dari URL dan update `GOOGLE_SCRIPT_ID` di `config.py`
 
 ---
 
@@ -225,7 +214,7 @@ sudo systemctl status timbangan
 
 ## 7. KALIBRASI LOAD CELL <a name="kalibrasi"></a>
 
-`CALIBRATION_FACTOR = ...`. **Setiap load cell berbeda**
+`CALIBRATION_FACTOR = ...` **Setiap load cell berbeda**
 
 ```bash
 python3 scripts/kalibrasi.py
