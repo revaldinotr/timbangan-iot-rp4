@@ -8,7 +8,6 @@
 [![Platform](https://img.shields.io/badge/Platform-Raspberry%20Pi%204-C51A4A?style=flat-square&logo=raspberry-pi&logoColor=white)](https://www.raspberrypi.com/)
 [![TFLite](https://img.shields.io/badge/TFLite-2.13.0-FF6F00?style=flat-square&logo=tensorflow&logoColor=white)](https://www.tensorflow.org/lite)
 [![OpenCV](https://img.shields.io/badge/OpenCV-4.9.0-5C3EE8?style=flat-square&logo=opencv&logoColor=white)](https://opencv.org/)
-[![License](https://img.shields.io/badge/License-MIT-22c55e?style=flat-square)](LICENSE)
 
 </div>
 
@@ -356,7 +355,6 @@ CALIBRATION_FACTOR = 23.7502   # ← ganti dengan hasil kalibrasi Anda
 
 ## 📄 Lisensi & Kontak
 
-Didistribusikan di bawah **MIT License** — lihat file [LICENSE](LICENSE) untuk detail lengkap.
 
 ---
 
