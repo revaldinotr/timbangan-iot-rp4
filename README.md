@@ -8,7 +8,7 @@
 ![Platform](https://img.shields.io/badge/platform-Raspberry%20Pi%20CM4-C51A4A?logo=raspberrypi&logoColor=white)
 ![Model](https://img.shields.io/badge/AI-YOLOv5n%20(TFLite%20FP16)-orange)
 
-Timbangan digital IoT untuk digitalisasi penimbangan komoditas sayuran di pasar tradisional. Sistem mengakuisisi data berat menggunakan sensor **load cell strain gauge 180 kg** + ADC **HX711 24-bit**, mengidentifikasi jenis sayuran (wortel, tomat, kentang) secara otomatis menggunakan model **YOLOv5n** berbasis *computer vision* (*edge computing* TFLite FP16), lalu mencatat data secara *real-time* ke **Google Sheets** serta menyediakan **notifikasi & chatbot WhatsApp berbasis AI (LLaMA 3.3 70B via Groq)** melalui *workflow* otomasi **n8n**.
+Timbangan digital IoT untuk digitalisasi penimbangan komoditas sayuran di pasar tradisional. Sistem mengakuisisi data berat menggunakan sensor **load cell strain gauge 180 kg** + ADC **HX711 24-bit**, mengidentifikasi jenis sayuran (wortel, tomat, kentang) secara otomatis menggunakan model **YOLOv5n** berbasis *computer vision* (*edge computing* TFLite FP16), lalu mencatat data secara *real-time* ke **Google Sheets** serta menyediakan **notifikasi & chatbot WhatsApp berbasis AI** melalui *workflow* otomasi **n8n**.
 
 Proyek ini merupakan Tugas Akhir DIII Teknik Elektronika, Jurusan Teknik Elektro, **Politeknik Negeri Sriwijaya (2026)**, yang dikembangkan oleh dua subsistem:
 - **Subsistem Akuisisi Data Berat** — Reval Dino Try Rahmady
