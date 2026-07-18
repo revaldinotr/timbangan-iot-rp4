@@ -10,10 +10,6 @@
 
 Timbangan digital IoT untuk digitalisasi penimbangan komoditas sayuran di pasar tradisional. Sistem mengakuisisi data berat menggunakan sensor **load cell strain gauge 180 kg** + ADC **HX711 24-bit**, mengidentifikasi jenis sayuran (wortel, tomat, kentang) secara otomatis menggunakan model **YOLOv5n** berbasis *computer vision* (*edge computing* TFLite FP16), lalu mencatat data secara *real-time* ke **Google Sheets** serta menyediakan **notifikasi & chatbot WhatsApp berbasis AI** melalui *workflow* otomasi **n8n**.
 
-Proyek ini merupakan Tugas Akhir DIII Teknik Elektronika, Jurusan Teknik Elektro, **Politeknik Negeri Sriwijaya (2026)**, yang dikembangkan oleh dua subsistem:
-- **Subsistem Akuisisi Data Berat** — Reval Dino Try Rahmady
-- **Subsistem Penyortir Cerdas (Computer Vision)** — Aryo Dwi Cahyo
-
 ---
 
 ## 📑 Daftar Isi
