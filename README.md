@@ -248,9 +248,4 @@ Proyek ini merupakan **karya Tugas Akhir akademik** Politeknik Negeri Sriwijaya 
 | **Reval Dino Try Rahmady** | 062330320631 | Sistem Akuisisi Data Berat (Load Cell + HX711 + IoT) |
 | **Aryo Dwi Cahyo** | 062330320613 | Penyortir Cerdas Jenis Sayuran (YOLOv5n + Computer Vision) |
 
-**Dosen Pembimbing:** Dewi Permata Sari, S.T., M.Kom. (Pembimbing I) · Abdurrahman, S.T., M.Kom. (Pembimbing II)
-
-Program Studi DIII Teknik Elektronika, Jurusan Teknik Elektro
-**Politeknik Negeri Sriwijaya** — Palembang, 2026
-
 🔗 Repositori: [github.com/revaldinotr/timbangan-iot-rp4](https://github.com/revaldinotr/timbangan-iot-rp4)
