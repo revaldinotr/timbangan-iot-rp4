@@ -58,18 +58,6 @@ Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX7
 |---|---|
 | ![Sketsa 3D Alat](docs/images/alat/sketsa-3d.png) | ![Hasil Perancangan Alat](docs/images/alat/hasil-perancangan-alat.png) |
 
-**Perancangan software:**
-
-Alur perancangan perangkat lunak digambarkan pada *flowchart* berikut, mulai dari inisialisasi sensor & tare, pembacaan berat, filtering hingga nilai stabil (*stable lock*), penampilan ke LCD, hingga pengiriman data ke Google Sheets saat tombol ditekan.
-
-![Flowchart Perancangan Software](docs/images/diagram/flowchart-software.png)
-
-Tahapan penyiapan sistem perangkat lunak — dari *flashing* OS hingga *deployment* workflow n8n — dirangkum pada diagram berikut:
-
-![Perancangan Software](docs/images/diagram/perancangan-software.png)
-
----
-
 ## 🔩 Kebutuhan Hardware
 
 | Komponen | Spesifikasi |
@@ -88,7 +76,7 @@ Tahapan penyiapan sistem perangkat lunak — dari *flashing* OS hingga *deployme
 ---
 
 ## 💻 Kebutuhan Software & Library
-
+![Perancangan Software](docs/images/diagram/perancangan-software.png)
 **Sistem operasi & tooling**
 - Raspberry Pi OS (subsistem berat) / Ubuntu Server 22.04 LTS 64-bit (subsistem computer vision) — operasi *headless*
 - Raspberry Pi Imager + utilitas `rpiboot` (flashing eMMC CM4)
