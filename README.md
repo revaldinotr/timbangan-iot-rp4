@@ -279,45 +279,30 @@ Deteksi *real-time* (TFLite FP16 di CM4): **48/60 percobaan berhasil (80%)**, co
 ![Hasil Deteksi Real-time](docs/images/hasil/deteksi-realtime.jpeg)
 
 ### 5. Integrasi Cloud & Chatbot
-
-#### 5.1. Pengujian Pengiriman Data ke Google Sheets
 Pengujian dilakukan dengan menempatkan sampel sayuran di atas timbangan, menunggu LCD menampilkan pembacaan yang stabil, lalu menekan tombol pengiriman. Alur tampilan LCD berlangsung tiga tahap: kondisi awal (`Berat: 6.93 KG` / `Jenis: Tomat`) → status unggah (`Mengirim data.. / Mohon tunggu...`) saat berat, jenis, dan foto tangkapan kamera diunggah ke Google Apps Script → konfirmasi berhasil (`TERKIRIM + FOTO! 6.9kg Tomat`). Hasil: **13/15 percobaan berhasil** (waktu kirim 2–6 detik; kegagalan hanya terjadi saat Wi-Fi terputus/tidak stabil).
-
-**Tabel — Alur Pengiriman Data ke Google Sheets**
 
 | Tampilan LCD (Berat & Jenis) | Proses Pengiriman | Berhasil Terkirim |
 |:---:|:---:|:---:|
 | ![LCD Berat dan Jenis](docs/images/hasil/lcd-berat-jenis.jpeg) | ![LCD Mengirim Data](docs/images/hasil/lcd-mengirim.jpeg) | ![LCD Terkirim + Foto](docs/images/hasil/lcd-terkirim.jpeg) |
-
-Data yang tersimpan di Google Sheets selanjutnya diakses otomatis oleh *workflow* n8n melalui Google Sheets API setiap kali pengguna mengirim pertanyaan ke *chatbot* WhatsApp, sehingga jawaban LLM selalu berdasarkan kondisi stok sayur terkini.
-
-**Antarmuka Pencatatan Google Sheets**
-
 ![Antarmuka Pencatatan Google Sheets](docs/images/hasil/google-sheets.png)
 
-#### 5.2. Pengujian Chatbot WhatsApp
+Data stok sayur di Google Sheets diakses otomatis oleh workflow n8n melalui Google Sheets API setiap kali pengguna mengirim pertanyaan ke chatbot WhatsApp, sehingga jawaban LLM selalu berdasarkan kondisi stok terkini. Antarmuka workflow n8n ini dirancang dengan mengintegrasikan Fonnte API, webhook n8n, Google Sheets, autentikasi PIN, dan Groq LLaMA 3.3 70B.
 
-**a. Inisialisasi sistem (pasca-boot).** Saat Raspberry Pi baru terhubung ke daya dan Wi-Fi, proses inisialisasi mencakup booting OS, *starting* Docker container n8n, dan pembentukan koneksi Cloudflare Tunnel — menghasilkan *delay* total ±2 menit sebelum sistem siap. Pada pengujian, pesan yang dikirim pukul 9.18 pm dan 9.19 pm baru direspons pukul 9.20 pm. Respons menampilkan alur autentikasi **PIN** lengkap: notifikasi belum login → instruksi ketik `LOGIN` → permintaan PIN → konfirmasi login berhasil (sesi aktif 60 menit).
+![Desain Workflow n8n Chatbot WhatsApp](docs/images/hasil/n8n-workflow.png)
+
+
+Saat Raspberry Pi baru terhubung ke daya dan Wi-Fi, proses inisialisasi mencakup booting OS, *starting* Docker container n8n, dan pembentukan koneksi Cloudflare Tunnel — menghasilkan *delay* total ±2 menit sebelum sistem siap. Pada pengujian, pesan yang dikirim pukul 9.18 pm dan 9.19 pm baru direspons pukul 9.20 pm. Respons menampilkan alur autentikasi **PIN** lengkap: notifikasi belum login → instruksi ketik `LOGIN` → permintaan PIN → konfirmasi login berhasil (sesi aktif 60 menit).
 
 ![Tangkapan Layar Chatbot WhatsApp Awal Booting](docs/images/hasil/chatbot-booting.jpeg)
-
-**b. Pengujian respons chatbot.** *Chatbot* mampu:
-- menjawab ketersediaan stok sayur *real-time* beserta detail berat dan *timestamp* pencatatan;
-- memahami pertanyaan lanjutan — menghitung total berat masuk, mengidentifikasi jenis sayur pada hari tertentu, dan mengkalkulasi potensi pendapatan ketika pengguna menyertakan harga jual;
-- menjaga batas data dengan menjawab jujur saat ditanya di luar cakupan spreadsheet (mis. harga beli/keuntungan), sembari menawarkan alternatif perhitungan yang relevan;
-- mengirim foto produk dari Google Drive beserta daftar stok lengkap ketika diminta.
-
-Notifikasi WhatsApp otomatis ke pemilik toko diterima **< 5 detik** setelah data tercatat.
 
 | Uji Respons #1 | Uji Respons #2 | Uji Respons #3 |
 |:---:|:---:|:---:|
 | ![Uji Chatbot 1](docs/images/hasil/chatbot-uji-1.jpeg) | ![Uji Chatbot 2](docs/images/hasil/chatbot-uji-2.jpeg) | ![Uji Chatbot 3](docs/images/hasil/chatbot-uji-3.jpeg) |
-
-#### 5.3. Desain Workflow n8n
-Desain akhir antarmuka *workflow* n8n untuk *chatbot* WhatsApp (integrasi Fonnte API, webhook n8n, Google Sheets, autentikasi PIN, dan Groq LLaMA 3.3 70B).
-
-![Desain Workflow n8n Chatbot WhatsApp](docs/images/hasil/n8n-workflow.png)
-
+Chatbot mampu:
+- menjawab ketersediaan stok sayur *real-time* beserta detail berat dan *timestamp* pencatatan;
+- memahami pertanyaan lanjutan — menghitung total berat masuk, mengidentifikasi jenis sayur pada hari tertentu, dan mengkalkulasi potensi pendapatan ketika pengguna menyertakan harga jual;
+- menjaga batas data dengan menjawab jujur saat ditanya di luar cakupan spreadsheet (mis. harga beli/keuntungan), sembari menawarkan alternatif perhitungan yang relevan;
+- mengirim foto produk dari Google Drive beserta daftar stok lengkap ketika diminta.
 ---
 
 ## 🤝 Kontribusi & Lisensi
