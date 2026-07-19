@@ -326,8 +326,6 @@ Proyek ini merupakan **karya Tugas Akhir akademik** Politeknik Negeri Sriwijaya 
   </tbody>
 </table>
 
-**Dosen Pembimbing:** Dewi Permata Sari, S.T., M.Kom. (Pembimbing I) · Abdurrahman, S.T., M.Kom. (Pembimbing II)
-
-Program Studi DIII Teknik Elektronika, Jurusan Teknik Elektro — **Politeknik Negeri Sriwijaya**, Palembang, 2026.
+Jurusan Teknik Elektro — **Politeknik Negeri Sriwijaya**, Palembang, 2026.
 
 🔗 Repositori: [github.com/revaldinotr/timbangan-iot-rp4](https://github.com/revaldinotr/timbangan-iot-rp4)
