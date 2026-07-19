@@ -23,7 +23,7 @@ Timbangan digital IoT untuk digitalisasi penimbangan komoditas sayuran di pasar 
 
 ---
 
-## ✨ Fitur Utama
+## Fitur Utama
 
 - **Penimbangan presisi tinggi** — akurasi 99,50%–99,98% (rentang uji 1–30 kg), RSD < 1%, drift terjaga dalam pita ±0,02 kg, dengan faktor kalibrasi 24,1850 count/gram.
 - **Filter berat ala timbangan komersial** — *trimmed median sampling*, *rolling median*, *deadband*, dan mekanisme **Stable Lock** yang mengunci nilai saat pembacaan stabil.
@@ -35,7 +35,7 @@ Timbangan digital IoT untuk digitalisasi penimbangan komoditas sayuran di pasar 
 
 ---
 
-## 🏗 Arsitektur Sistem
+## Arsitektur Sistem
 
 Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX711 (berat) dan webcam (citra) sebagai masukan; Raspberry Pi CM4 menjalankan konversi berat, filtering, dan inferensi YOLOv5n; keluaran ditampilkan di LCD 16×2 lalu ditransmisikan ke Google Sheets dan diteruskan ke WhatsApp.
 
@@ -56,7 +56,7 @@ Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX7
 |---|---|
 | ![Sketsa 3D Alat](docs/images/alat/sketsa-3d.png) | ![Hasil Perancangan Alat](docs/images/alat/hasil-perancangan-alat.png) |
 
-## 🔩 Kebutuhan Hardware
+## Kebutuhan Hardware
 
 | Komponen | Spesifikasi |
 |---|---|
@@ -73,7 +73,7 @@ Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX7
 
 ---
 
-## 💻 Kebutuhan Software & Library
+## Kebutuhan Software & Library
 ![Perancangan Software](docs/images/diagram/perancangan-software.png)
 **Sistem operasi & tooling**
 - Raspberry Pi OS (subsistem berat) / Ubuntu Server 22.04 LTS 64-bit (subsistem computer vision) — operasi *headless*
@@ -96,7 +96,7 @@ Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX7
 
 ---
 
-## 📂 Struktur Folder Repositori
+## Struktur Folder Repositori
 
 ```
 Timbangan-IoT/
@@ -125,7 +125,7 @@ Timbangan-IoT/
 
 ---
 
-## 🚀 Panduan Instalasi & Menjalankan Sistem
+## Panduan Instalasi & Menjalankan Sistem
 
 1. **Flash OS ke eMMC CM4** — geser sakelar board I/O ke mode *boot* USB-C, hubungkan ke komputer, jalankan `rpiboot` agar eMMC terbaca sebagai drive, lalu tulis OS (Raspberry Pi OS / Ubuntu Server 22.04) beserta konfigurasi SSH menggunakan **Raspberry Pi Imager**. Kembalikan sakelar ke mode normal dan nyalakan ulang.
 2. **Konfigurasi awal sistem** — jalankan `sudo raspi-config` untuk mengaktifkan **SSH** dan antarmuka **I2C**/SPI, atur Wi-Fi, zona waktu, dan hostname.
@@ -160,7 +160,7 @@ Timbangan-IoT/
 
 ---
 
-## 📖 SOP Alat
+## SOP Alat
 
 1. Aktifkan **toggle switch** — Raspberry Pi CM4 booting dan otomatis menjalankan skrip serta layanan n8n.
 2. Letakkan sayuran di atas platform timbangan (titik uji di tengah alas, area bertanda). Load cell membaca berat, webcam memindai jenis sayuran; jika objek tidak dikenali, sistem memindai ulang.
@@ -170,7 +170,7 @@ Timbangan-IoT/
 
 ---
 
-## 🧪 Dokumentasi Pengujian & Hasil
+## Dokumentasi Pengujian & Hasil
 
 ### 1. Kalibrasi Load Cell
 Beban acuan 1.000 gram; tare = 392.468 count, ADC beban = 416.653 count → **faktor kalibrasi k = 24,1850 count/gram** (selisih hanya 1,36% terhadap rekonstruksi tegangan teoritis; faktor teoretis 23,8609).
@@ -243,7 +243,7 @@ Saat Raspberry Pi baru terhubung ke daya dan Wi-Fi, sistem menjalani proses inis
 
 ---
 
-## 🤝 Kontribusi & Lisensi
+## Kontribusi & Lisensi
 
 Kontribusi terbuka untuk pengembangan lanjutan, antara lain (sesuai saran laporan): pengujian langsung di lingkungan pasar tradisional, perluasan uji beban hingga kapasitas 180 kg, peredam getaran mekanik pada dudukan load cell, upgrade ke Raspberry Pi 5 (RAM 4–8 GB), perluasan/penyeimbangan dataset (wortel & kentang), penerapan *focal loss*, migrasi ke YOLOv8/YOLOv11, mekanisme antrian data lokal saat koneksi terputus, deteksi kualitas/kesegaran sayuran, serta dashboard web/aplikasi mobile untuk manajemen stok.
 
@@ -253,7 +253,7 @@ Proyek ini merupakan **karya Tugas Akhir akademik** Politeknik Negeri Sriwijaya 
 
 ---
 
-## 👥 Kontak / Penulis
+## Kontak / Penulis
 
 <table>
   <thead>
