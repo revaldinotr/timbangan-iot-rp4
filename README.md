@@ -50,7 +50,7 @@ Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX7
 |---|---|
 | ![Sketsa 3D Alat](docs/images/alat/sketsa-3d.png) | ![Hasil Perancangan Alat](docs/images/alat/hasil-perancangan-alat.png) |
 
-## Kebutuhan Hardware
+## Hardware
 
 | Komponen | Spesifikasi |
 |---|---|
@@ -67,7 +67,7 @@ Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX7
 
 ---
 
-## Kebutuhan Software & Library
+## Software & Library
 ![Perancangan Software](docs/images/diagram/perancangan-software.png)
 **Sistem operasi & tooling**
 - Raspberry Pi OS (subsistem berat) / Ubuntu Server 22.04 LTS 64-bit (subsistem computer vision) — operasi *headless*
