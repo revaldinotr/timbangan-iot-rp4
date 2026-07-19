@@ -23,18 +23,6 @@ Timbangan digital IoT untuk digitalisasi penimbangan komoditas sayuran di pasar 
 
 ---
 
-## Fitur Utama
-
-- **Penimbangan presisi tinggi** — akurasi 99,50%–99,98% (rentang uji 1–30 kg), RSD < 1%, drift terjaga dalam pita ±0,02 kg, dengan faktor kalibrasi 24,1850 count/gram.
-- **Filter berat ala timbangan komersial** — *trimmed median sampling*, *rolling median*, *deadband*, dan mekanisme **Stable Lock** yang mengunci nilai saat pembacaan stabil.
-- **Identifikasi jenis sayuran otomatis** — YOLOv5n (dilatih 1.668 gambar, 200 epoch di Google Colab via Roboflow), dikonversi ke TFLite FP16; akurasi deteksi *real-time* 80% pada 3–5 FPS di CPU ARM Cortex-A72.
-- **Tampilan lokal LCD 16×2 I2C** — berat, jenis sayuran, dan status pengiriman secara sinkron.
-- **Pengiriman data satu tombol** — *push button* (NO aktif rendah) memicu pengiriman berat, jenis, dan foto ke Google Sheets + Google Drive melalui Google Apps Script (latensi 2–6 detik).
-- **Chatbot WhatsApp berbasis AI** — alur WhatsApp → Fonnte API → n8n → Google Sheets → Groq (LLaMA 3.3 70B) → WhatsApp, dilengkapi autentikasi **PIN** dengan sesi 60 menit, mampu menjawab pertanyaan stok, kalkulasi total berat, hingga mengirim foto produk dari Drive.
-- **Operasi headless** — pengembangan & pemeliharaan jarak jauh via SSH (VS Code Remote-SSH), n8n berjalan lokal dalam Docker dan diekspos publik via Cloudflare Tunnel.
-
----
-
 ## Arsitektur Sistem
 
 Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX711 (berat) dan webcam (citra) sebagai masukan; Raspberry Pi CM4 menjalankan konversi berat, filtering, dan inferensi YOLOv5n; keluaran ditampilkan di LCD 16×2 lalu ditransmisikan ke Google Sheets dan diteruskan ke WhatsApp.
