@@ -241,7 +241,7 @@ Proyek ini merupakan **karya Tugas Akhir akademik** Politeknik Negeri Sriwijaya 
 
 ---
 
-## Kontak / Penulis
+## Penulis
 
 <table>
   <thead>
