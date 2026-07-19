@@ -320,7 +320,7 @@ Proyek ini merupakan **karya Tugas Akhir akademik** Politeknik Negeri Sriwijaya 
     <tr>
       <td align="center"><img src="docs/images/penulis/aryo.jpg" width="90" alt="Aryo Dwi Cahyo"></td>
       <td align="left"><b>Aryo Dwi Cahyo</b></td>
-      <td align="left">062330320613</td>
+      <td align="left">www.linkedin.com/in/aryo-dwi-cahyo</td>
       <td align="left">Penyortir Cerdas Jenis Sayuran (YOLOv5n + Computer Vision)</td>
     </tr>
   </tbody>
