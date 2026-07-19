@@ -303,7 +303,7 @@ Proyek ini merupakan **karya Tugas Akhir akademik** Politeknik Negeri Sriwijaya 
 
 | Penulis | NIM | Subsistem |
 |---|---|---|
-<img width="2000" height="2499" alt="Reval Jas Latar merah" src="https://github.com/user-attachments/assets/2367ee9e-68c8-412d-ba0b-b533c425f70b" />
+<img src="https://github.com/user-attachments/assets/2367ee9e-68c8-412d-ba0b-b533c425f70b" width="76" height="113" alt="Reval Jas Latar merah" />   
 | **Reval Dino Try Rahmady** | 062330320631 | Sistem Akuisisi Data Berat (Load Cell + HX711 + IoT) |
 | **Aryo Dwi Cahyo** | 062330320613 | Penyortir Cerdas Jenis Sayuran (YOLOv5n + Computer Vision) |
 
