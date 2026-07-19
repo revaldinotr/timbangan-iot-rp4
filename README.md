@@ -154,7 +154,7 @@ Timbangan-IoT/
 
 ---
 
-## SOP Alat
+## SOP (*Standar Operasional Prosedur*) alat 
 
 1. Aktifkan **toggle switch** Power Supply sehingga Raspberry Pi CM4 booting dan otomatis menjalankan skrip serta layanan n8n.
 3. Letakkan sayuran di atas platform timbangan (titik uji di tengah alas, area bertanda). Load cell membaca berat, webcam memindai jenis sayuran; jika objek tidak dikenali, sistem memindai ulang.
