@@ -150,7 +150,7 @@ Timbangan-IoT/
 
 ## SOP Alat
 
-1. Aktifkan **toggle switch** — Raspberry Pi CM4 booting dan otomatis menjalankan skrip serta layanan n8n.
+1. Aktifkan **toggle switch** Power Supply — Raspberry Pi CM4 booting dan otomatis menjalankan skrip serta layanan n8n.
 2. Letakkan sayuran di atas platform timbangan (titik uji di tengah alas, area bertanda). Load cell membaca berat, webcam memindai jenis sayuran; jika objek tidak dikenali, sistem memindai ulang.
 3. LCD 16×2 menampilkan hasil, misal `Berat: 6.93 KG` dan `Jenis: Tomat`; nilai berat terkunci otomatis saat stabil (`>> STABIL <<`).
 4. Tekan **push button** untuk mengirim data — LCD menampilkan `Mengirim data.. / Mohon tunggu...`, lalu konfirmasi `TERKIRIM + FOTO!` setelah berat, jenis, dan foto tersimpan di Google Sheets & Drive.
