@@ -1,6 +1,4 @@
-# Timbangan-IoT 🥕⚖️
-
-**Sistem Akuisisi Data Berat & Penyortir Cerdas Jenis Sayuran Berbasis Raspberry Pi CM4**
+# Sistem Akuisisi Data Berat & Penyortir Cerdas Jenis Sayuran Berbasis Raspberry Pi CM4
 
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 ![License](https://img.shields.io/badge/license-Academic%2FEducational-blue)
