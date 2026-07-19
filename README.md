@@ -279,7 +279,7 @@ Deteksi *real-time* (TFLite FP16 di CM4): **48/60 percobaan berhasil (80%)**, co
 ![Hasil Deteksi Real-time](docs/images/hasil/deteksi-realtime.jpeg)
 
 ### 5. Integrasi Cloud & Chatbot
-Pengujian dilakukan dengan menempatkan sampel sayuran di atas timbangan, menunggu LCD menampilkan pembacaan yang stabil, kemudian menekan tombol pengiriman. Alur tampilan LCD berlangsung dalam tiga tahap, dimulai dari kondisi awal (Berat: 6.93 KG / Jenis: Tomat), dilanjutkan dengan status unggah (Mengirim data.. / Mohon tunggu...) saat berat, jenis, dan foto tangkapan kamera diunggah ke Google Apps Script, hingga konfirmasi berhasil (TERKIRIM + FOTO! 6.9kg Tomat). Hasil pengujian menunjukkan 13 dari 15 percobaan berhasil dengan waktu kirim berkisar 2–6 detik, sementara kegagalan hanya terjadi ketika koneksi Wi-Fi terputus atau tidak stabil.
+Pengujian dilakukan dengan menempatkan sampel sayuran di atas timbangan, menunggu LCD menampilkan pembacaan yang stabil, lalu menekan tombol pengiriman. Alur tampilan LCD berlangsung tiga tahap: kondisi awal (`Berat: 6.93 KG` / `Jenis: Tomat`) → status unggah (`Mengirim data.. / Mohon tunggu...`) saat berat, jenis, dan foto tangkapan kamera diunggah ke Google Apps Script → konfirmasi berhasil (`TERKIRIM + FOTO! 6.9kg Tomat`). Hasil: **13/15 percobaan berhasil** (waktu kirim 2–6 detik; kegagalan hanya terjadi saat Wi-Fi terputus/tidak stabil)..
 
 | Tampilan LCD (Berat & Jenis) | Proses Pengiriman | Berhasil Terkirim |
 |:---:|:---:|:---:|
