@@ -9,7 +9,7 @@ Timbangan digital IoT untuk digitalisasi penimbangan komoditas sayuran di pasar 
 
 ---
 
-## 📑 Daftar Isi
+## Daftar Isi
 - [Fitur Utama](#-fitur-utama)
 - [Arsitektur Sistem](#-arsitektur-sistem)
 - [Kebutuhan Hardware](#-kebutuhan-hardware)
