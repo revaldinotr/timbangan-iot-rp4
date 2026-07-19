@@ -158,8 +158,6 @@ Timbangan-IoT/
 5. LCD 16×2 menampilkan hasil, misal `Berat: 6.93 KG` dan `Jenis: Tomat`; nilai berat terkunci otomatis saat stabil (`>> STABIL <<`).
 6. Tekan **push button** untuk mengirim data, sehingga LCD menampilkan `Mengirim data.. / Mohon tunggu...`, lalu konfirmasi `TERKIRIM + FOTO!` setelah berat, jenis, dan foto tersimpan di Google Sheets & Drive.
 7. Pantau stok jarak jauh via **chatbot WhatsApp**: ketik `LOGIN`, masukkan **PIN** (sesi aktif 60 menit), lalu tanyakan stok, total berat masuk, jenis sayur per hari, kalkulasi pendapatan, atau minta lampiran foto produk.
-|:---:|
-| ![Tangkapan Layar Chatbot WhatsApp Awal Booting](docs/images/hasil/chatbot-booting.jpeg) |
 
 ---
 
@@ -218,6 +216,10 @@ Pengujian dilakukan dengan menempatkan sampel sayuran di atas timbangan, menungg
 Data stok sayur di Google Sheets diakses otomatis oleh workflow n8n melalui Google Sheets API setiap kali pengguna mengirim pertanyaan ke chatbot WhatsApp, sehingga jawaban LLM selalu berdasarkan kondisi stok terkini. Antarmuka workflow n8n ini dirancang dengan mengintegrasikan Fonnte API, webhook n8n, Google Sheets, autentikasi PIN, dan Groq LLaMA 3.3 70B.
 
 ![Desain Workflow n8n Chatbot WhatsApp](docs/images/hasil/n8n-workflow.png)
+
+Saat Raspberry Pi baru terhubung ke daya dan Wi-Fi, sistem menjalani proses inisialisasi yang mencakup *booting* OS, *starting* *Docker container* n8n, hingga pembentukan koneksi Cloudflare Tunnel, dengan total *delay* sekitar ±2 menit sebelum sistem siap digunakan. Kondisi ini terkonfirmasi pada pengujian, di mana pesan yang dikirim pukul 9.18 pm dan 9.19 pm baru mendapatkan respons pada pukul 9.20 pm. Respons yang muncul kemudian menampilkan alur autentikasi PIN secara lengkap, mulai dari notifikasi bahwa pengguna belum *login*, instruksi untuk mengetik `LOGIN`, permintaan PIN, hingga konfirmasi *login* berhasil dengan sesi aktif selama 60 menit.
+
+| ![Tangkapan Layar Chatbot WhatsApp Awal Booting](docs/images/hasil/chatbot-booting.jpeg) |
 
 *Chatbot* yang dikembangkan mampu:
 - menjawab ketersediaan stok sayur secara *real-time*, lengkap dengan detail berat dan *timestamp* pencatatan;
