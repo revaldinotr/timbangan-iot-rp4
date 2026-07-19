@@ -314,7 +314,7 @@ Proyek ini merupakan **karya Tugas Akhir akademik** Politeknik Negeri Sriwijaya 
     <tr>
       <td align="center"><img src="docs/images/penulis/reval.jpg" width="90" alt="Reval Dino Try Rahmady"></td>
       <td align="left"><b>Reval Dino Try Rahmady</b></td>
-      <td align="left">062330320631</td>
+      <td align="left">(www.linkedin.com/in/revaldino</td)>
       <td align="left">Sistem Akuisisi Data Berat (Load Cell + HX711 + IoT)</td>
     </tr>
     <tr>
