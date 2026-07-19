@@ -28,12 +28,14 @@ Timbangan digital IoT untuk digitalisasi penimbangan komoditas sayuran di pasar 
 Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX711 (berat) dan webcam (citra) sebagai masukan; Raspberry Pi CM4 menjalankan konversi berat, filtering, dan inferensi YOLOv5n; keluaran ditampilkan di LCD 16×2 lalu ditransmisikan ke Google Sheets dan diteruskan ke WhatsApp.
 
 **Diagram Blok Sistem:**
-
-![Diagram Blok Sistem](docs/images/diagram/diagram-blok-sistem.png)
+<p align="center">
+  <img src="docs/images/diagram/diagram-blok-sistem.png" alt="Diagram Blok Sistem">
+</p>
 
 **Flowchart Sistem Keseluruhan:**
-
-![Flowchart Sistem Keseluruhan](docs/images/diagram/flowchart-sistem.png)
+<p align="center">
+  <img src="docs/images/diagram/flowchart-sistem.png" alt="Flowchart Sistem Keseluruhan">
+</p>
 
 **Rangkaian & pengkabelan:**
 
