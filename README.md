@@ -1,4 +1,4 @@
-# LoadCell-HX711-YOLOv5N-Raspberry-Pi-n8n
+# LoadCell-HX711-YOLOv5N-n8n-Raspberry-Pi-CM4
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 ![License](https://img.shields.io/badge/license-Academic%2FEducational-blue)
 ![Python](https://img.shields.io/badge/language-Python%203-3776AB?logo=python&logoColor=white)
