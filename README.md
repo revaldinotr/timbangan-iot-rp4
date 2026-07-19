@@ -225,12 +225,12 @@ Timbangan-IoT/
 
 ---
 
-## 📖 Cara Penggunaan
+## 📖 SOP Alat
 
 1. Aktifkan **toggle switch** — Raspberry Pi CM4 booting dan otomatis menjalankan skrip serta layanan n8n.
 2. Letakkan sayuran di atas platform timbangan (titik uji di tengah alas, area bertanda). Load cell membaca berat, webcam memindai jenis sayuran; jika objek tidak dikenali, sistem memindai ulang.
 3. LCD 16×2 menampilkan hasil, misal `Berat: 6.93 KG` dan `Jenis: Tomat`; nilai berat terkunci otomatis saat stabil (`>> STABIL <<`).
-4. Tekan **push button** untuk mengirim data — LCD menampilkan `Mengirim data.. / Mohon tunggu...`, lalu konfirmasi `TERKIRIM + FOTO!` setelah berat, jenis, dan foto tersimpan di Google Sheets & Drive. Pemilik toko menerima **notifikasi WhatsApp** otomatis.
+4. Tekan **push button** untuk mengirim data — LCD menampilkan `Mengirim data.. / Mohon tunggu...`, lalu konfirmasi `TERKIRIM + FOTO!` setelah berat, jenis, dan foto tersimpan di Google Sheets & Drive.
 5. Pantau stok jarak jauh via **chatbot WhatsApp**: ketik `LOGIN`, masukkan **PIN** (sesi aktif 60 menit), lalu tanyakan stok, total berat masuk, jenis sayur per hari, kalkulasi pendapatan, atau minta lampiran foto produk.
 
 ---
@@ -279,7 +279,7 @@ Deteksi *real-time* (TFLite FP16 di CM4): **48/60 percobaan berhasil (80%)**, co
 ![Hasil Deteksi Real-time](docs/images/hasil/deteksi-realtime.jpeg)
 
 ### 5. Integrasi Cloud & Chatbot
-Pengujian dilakukan dengan menempatkan sampel sayuran di atas timbangan, menunggu LCD menampilkan pembacaan yang stabil, lalu menekan tombol pengiriman. Alur tampilan LCD berlangsung tiga tahap: kondisi awal (`Berat: 6.93 KG` / `Jenis: Tomat`) → status unggah (`Mengirim data.. / Mohon tunggu...`) saat berat, jenis, dan foto tangkapan kamera diunggah ke Google Apps Script → konfirmasi berhasil (`TERKIRIM + FOTO! 6.9kg Tomat`). Hasil: **13/15 percobaan berhasil** (waktu kirim 2–6 detik; kegagalan hanya terjadi saat Wi-Fi terputus/tidak stabil).
+Pengujian dilakukan dengan menempatkan sampel sayuran di atas timbangan, menunggu LCD menampilkan pembacaan yang stabil, kemudian menekan tombol pengiriman. Alur tampilan LCD berlangsung dalam tiga tahap, dimulai dari kondisi awal (Berat: 6.93 KG / Jenis: Tomat), dilanjutkan dengan status unggah (Mengirim data.. / Mohon tunggu...) saat berat, jenis, dan foto tangkapan kamera diunggah ke Google Apps Script, hingga konfirmasi berhasil (TERKIRIM + FOTO! 6.9kg Tomat). Hasil pengujian menunjukkan 13 dari 15 percobaan berhasil dengan waktu kirim berkisar 2–6 detik, sementara kegagalan hanya terjadi ketika koneksi Wi-Fi terputus atau tidak stabil.
 
 | Tampilan LCD (Berat & Jenis) | Proses Pengiriman | Berhasil Terkirim |
 |:---:|:---:|:---:|
