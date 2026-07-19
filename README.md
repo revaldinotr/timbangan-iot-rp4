@@ -205,7 +205,7 @@ Dataset 1.668 gambar (kentang 575, tomat 684, wortel 409), 200 epoch, evaluasi p
 | Wortel | 73,8% | 69,9% | 72,1% |
 | **Keseluruhan** | **80,4%** | **82,2%** | **84,7%** |
 
-Deteksi *real-time* (TFLite FP16 di CM4): **48/60 percobaan berhasil (80%)**, confidence rata-rata 80,6%, kecepatan **3–5 FPS** — tomat 90%, kentang 80%, wortel 70%.
+Deteksi *real-time* (TFLite FP16 di CM4): **48/60 percobaan berhasil (80%)**, confidence rata-rata 80,6%, kecepatan **10-20 FPS** — tomat 90%, kentang 80%, wortel 70%.
 
 ![Confusion Matrix](docs/images/hasil/confusion-matrix.png)
 ![Hasil Deteksi Real-time](docs/images/hasil/deteksi-realtime.jpeg)
