@@ -51,7 +51,6 @@ Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX7
 | Skematik Keseluruhan | Diagram Pengawatan | Desain PCB (Single Side) |
 |---|---|---|
 | ![Skematik Sistem](docs/images/wiring/skematik-keseluruhan.jpg) | ![Diagram Pengawatan](docs/images/wiring/diagram-pengawatan.jpg)
-```
 
 **Desain mekanik & hasil rakitan:**
 
