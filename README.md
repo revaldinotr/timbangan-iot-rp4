@@ -50,7 +50,26 @@ Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX7
 
 | Skematik Keseluruhan | Diagram Pengawatan | Desain PCB (Single Side) |
 |---|---|---|
-| ![Skematik Sistem](docs/images/wiring/skematik-keseluruhan.jpg) | ![Diagram Pengawatan](docs/images/wiring/diagram-pengawatan.jpg) | ![Desain PCB](docs/images/wiring/desain-pcb.png) |
+| ![Skematik Sistem](docs/images/wiring/skematik-keseluruhan.jpg) | ![Diagram Pengawatan](docs/images/wiring/diagram-pengawatan.jpg)
+```
+                    3V3  (1) (2)  5V  ← LCD & HX711 VCC
+           SDA1 GPIO2  (3) (4)  5V
+           SCL1 GPIO3  (5) (6)  GND  ← HX711 & LCD GND
+                      (7) (8)
+              GND (9)(10)
+                     (11)(12)  GPIO18  ← HX711 DT/DOUT
+                     (13)(14)  GND     ← Button GND
+                     (15)(16)  GPIO23  ← Push Button
+                     (17)(18)
+                     (19)(20)
+                     (21)(22)
+                     (23)(24)
+              GND   (25)(26)
+                     (27)(28)
+                     (29)(30)
+                     (31)(32)
+    HX711 SCK GPIO19 (35)(34)  GND
+```| ![Desain PCB](docs/images/wiring/desain-pcb.png) |
 
 Koneksi utama: HX711 `DOUT → GPIO17`, `SCK → GPIO27`; LCD 16×2 via ekspander I2C PCF8574 (alamat `0x27`, jalur SDA/SCL); *push button* NO aktif rendah pada `GPIO22` (pull-up internal); webcam via USB.
 
