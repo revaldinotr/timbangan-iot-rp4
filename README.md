@@ -284,6 +284,7 @@ Pengujian dilakukan dengan menempatkan sampel sayuran di atas timbangan, menungg
 | Tampilan LCD (Berat & Jenis) | Proses Pengiriman | Berhasil Terkirim |
 |:---:|:---:|:---:|
 | ![LCD Berat dan Jenis](docs/images/hasil/lcd-berat-jenis.jpeg) | ![LCD Mengirim Data](docs/images/hasil/lcd-mengirim.jpeg) | ![LCD Terkirim + Foto](docs/images/hasil/lcd-terkirim.jpeg) |
+
 ![Antarmuka Pencatatan Google Sheets](docs/images/hasil/google-sheets.png)
 
 Data stok sayur di Google Sheets diakses otomatis oleh workflow n8n melalui Google Sheets API setiap kali pengguna mengirim pertanyaan ke chatbot WhatsApp, sehingga jawaban LLM selalu berdasarkan kondisi stok terkini. Antarmuka workflow n8n ini dirancang dengan mengintegrasikan Fonnte API, webhook n8n, Google Sheets, autentikasi PIN, dan Groq LLaMA 3.3 70B.
@@ -295,14 +296,17 @@ Saat Raspberry Pi baru terhubung ke daya dan Wi-Fi, proses inisialisasi mencakup
 
 ![Tangkapan Layar Chatbot WhatsApp Awal Booting](docs/images/hasil/chatbot-booting.jpeg)
 
-| Uji Respons #1 | Uji Respons #2 | Uji Respons #3 |
-|:---:|:---:|:---:|
-| ![Uji Chatbot 1](docs/images/hasil/chatbot-uji-1.jpeg) | ![Uji Chatbot 2](docs/images/hasil/chatbot-uji-2.jpeg) | ![Uji Chatbot 3](docs/images/hasil/chatbot-uji-3.jpeg) |
 Chatbot mampu:
 - menjawab ketersediaan stok sayur *real-time* beserta detail berat dan *timestamp* pencatatan;
 - memahami pertanyaan lanjutan — menghitung total berat masuk, mengidentifikasi jenis sayur pada hari tertentu, dan mengkalkulasi potensi pendapatan ketika pengguna menyertakan harga jual;
 - menjaga batas data dengan menjawab jujur saat ditanya di luar cakupan spreadsheet (mis. harga beli/keuntungan), sembari menawarkan alternatif perhitungan yang relevan;
 - mengirim foto produk dari Google Drive beserta daftar stok lengkap ketika diminta.
+
+| Uji Respons #1 | Uji Respons #2 | Uji Respons #3 |
+|:---:|:---:|:---:|
+| ![Uji Chatbot 1](docs/images/hasil/chatbot-uji-1.jpeg) | ![Uji Chatbot 2](docs/images/hasil/chatbot-uji-2.jpeg) | ![Uji Chatbot 3](docs/images/hasil/chatbot-uji-3.jpeg) |
+
+
 ---
 
 ## 🤝 Kontribusi & Lisensi
