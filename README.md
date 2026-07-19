@@ -40,7 +40,7 @@ Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX7
 
 **Desain mekanik & hasil rakitan:**
 
-| Sketsa 3D (Tinkercad) | Hasil Perancangan Alat |
+| Sketsa 3D | Hasil Perancangan Alat |
 |---|---|
 | ![Sketsa 3D Alat](docs/images/alat/sketsa-3d.png) | ![Hasil Perancangan Alat](docs/images/alat/hasil-perancangan-alat.png) |
 
