@@ -180,7 +180,14 @@ Jalankan `sudo raspi-config` untuk mengaktifkan **SSH** dan antarmuka **I2C**/SP
 ## Dokumentasi Pengujian & Hasil
 
 ### 1. Kalibrasi Load Cell
-Beban acuan 1.000 gram; tare = 392.468 count, ADC beban = 416.653 count → **faktor kalibrasi k = 24,1850 count/gram** (selisih hanya 1,36% terhadap rekonstruksi tegangan teoritis; faktor teoretis 23,8609).
+| Parameter | Nilai |
+|---|---:|
+| Nilai ADC tanpa beban (tare) | 392.468 |
+| Nilai ADC beban acuan | 416.653 |
+| Selisih nilai ADC (N benda - N tare) | 24.185 |
+| Sensitivitas Aktual | 2,0272 mV/V |
+| Massa beban acuan | 1.000 gram (1,00 kg) |
+| Faktor kalibrasi (k) | 24,1850 |
 
 ![Terminal Hasil Kalibrasi](docs/images/hasil/terminal-kalibrasi.png)
 
