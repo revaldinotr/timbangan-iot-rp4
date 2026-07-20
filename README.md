@@ -119,32 +119,39 @@ Timbangan-IoT/
 
 **1. Flash OS ke eMMC CM4**
 Geser sakelar board I/O ke mode *boot* USB-C, hubungkan ke komputer, jalankan `rpiboot` agar eMMC terbaca sebagai drive, lalu tulis OS (Raspberry Pi OS / Ubuntu Server 22.04) beserta konfigurasi SSH menggunakan **Raspberry Pi Imager**. Kembalikan sakelar ke mode normal dan nyalakan ulang.
+
 **2. Konfigurasi awal sistem**
 Jalankan `sudo raspi-config` untuk mengaktifkan **SSH** dan antarmuka **I2C**/SPI, atur Wi-Fi, zona waktu, dan hostname.
-**4. Hubungkan VS Code Remote-SSH** ke Raspberry Pi untuk pengembangan headless.
-**5. Clone repositori**:
+
+**3. Hubungkan VS Code Remote-SSH** ke Raspberry Pi untuk pengembangan headless.
+
+**4. Clone repositori**:
    ```bash
    git clone https://github.com/revaldinotr/timbangan-iot-rp4
    cd timbangan-iot-rp4
    ```
-**6. Instal dependensi Python** (verifikasi dengan `pip list` / `pip show`):
+**5. Instal dependensi Python** (verifikasi dengan `pip list` / `pip show`):
    ```bash
    pip install RPi.GPIO hx711 RPLCD smbus2 requests numpy opencv-python tflite-runtime==2.13.0
    ```
-**7. Rakit perangkat keras** sesuai diagram pengawatan (HX711 → GPIO17/27, LCD I2C → SDA/SCL, push button → GPIO22, webcam → USB).
-**8. Kalibrasi load cell**:
+**6. Rakit perangkat keras** sesuai diagram pengawatan (HX711 → GPIO17/27, LCD I2C → SDA/SCL, push button → GPIO22, webcam → USB).
+
+**7. Kalibrasi load cell**:
    ```bash
    python3 firmware/kalibrasi.py
    ```
    Ikuti instruksi (tare kosong → letakkan beban acuan 1,00 kg → catat `CALIBRATION_FACTOR`), lalu masukkan nilainya ke konfigurasi `firmware/main.py`.
-**9. Deploy Google Apps Script** — salin `cloud/pb_to_sheets.gs` ke proyek Apps Script yang terikat pada Google Sheets, *deploy* sebagai *web app*, lalu isi `GOOGLE_SHEETS_SCRIPT_ID` pada konfigurasi firmware.
-**10. Siapkan n8n + Cloudflare Tunnel** — instal Docker (`curl` installer, `sudo usermod -aG docker $USER`), jalankan container n8n, buat *tunnel* di dashboard Cloudflare Zero Trust (Networks → Tunnels), arahkan *public hostname* ke port n8n, dan jalankan perintah konektor di terminal Raspberry Pi.
-**11. Import workflow n8n** — impor `cloud/n8n/manajemen-stok-sayur-whatsapp-pin.json`, konfigurasi kredensial Fonnte API, Google Sheets, dan Groq.
-**12. (Opsional) Verifikasi karakteristik sensor**:
+**8. Deploy Google Apps Script** — salin `cloud/pb_to_sheets.gs` ke proyek Apps Script yang terikat pada Google Sheets, *deploy* sebagai *web app*, lalu isi `GOOGLE_SHEETS_SCRIPT_ID` pada konfigurasi firmware.
+
+**9. Siapkan n8n + Cloudflare Tunnel** — instal Docker (`curl` installer, `sudo usermod -aG docker $USER`), jalankan container n8n, buat *tunnel* di dashboard Cloudflare Zero Trust (Networks → Tunnels), arahkan *public hostname* ke port n8n, dan jalankan perintah konektor di terminal Raspberry Pi.
+
+**10. Import workflow n8n** — impor `cloud/n8n/manajemen-stok-sayur-whatsapp-pin.json`, konfigurasi kredensial Fonnte API, Google Sheets, dan Groq.
+
+**11. (Opsional) Verifikasi karakteristik sensor**:
     ```bash
     python3 firmware/uji_sistem.py   # Mode 1: Akurasi & Presisi | Mode 2: Stabilitas
     ```
-**13. Jalankan program utama**:
+**12. Jalankan program utama**:
     ```bash
     python3 firmware/main.py
     ```
