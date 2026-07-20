@@ -1,0 +1,16 @@
+path: DATA FINAL
+train: train/images
+val: valid/images
+test: test/images
+
+names:
+  0: kentang
+  1: tomat
+  2: wortel
+
+roboflow:
+  workspace: aryo-dwi-cahyo
+  project: deteksi-sayuran-v5
+  version: 4
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/aryo-dwi-cahyo/deteksi-sayuran-v5/dataset/4
