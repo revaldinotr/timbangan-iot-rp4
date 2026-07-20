@@ -151,6 +151,7 @@ Jalankan `sudo raspi-config` untuk mengaktifkan **SSH** dan antarmuka **I2C**/SP
     ```bash
     python3 firmware/uji_sistem.py   # Mode 1: Akurasi & Presisi | Mode 2: Stabilitas
     ```
+
 **12. Jalankan program utama**:
     ```bash
     python3 firmware/main.py
