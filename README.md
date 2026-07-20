@@ -68,57 +68,7 @@ Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX7
 ---
 
 ## Software & Library
-
-**Alur pelatihan model deteksi jenis sayur (subsistem computer vision):**
-![PerancanganSoftware2](docs/images/diagram/perancangan-software2.png)
-
-Diagram di atas merangkum alur pelatihan model YOLOv5 untuk deteksi jenis sayur, dari persiapan lingkungan hingga ekspor model:
-
-**1. Persiapan Lingkungan dan Runtime**
-- *Pengaturan Akselerator Hardware:* menggunakan lingkungan komputasi yang mendukung akselerator GPU, seperti GPU T4 (Tesla T4), untuk mempercepat proses pelatihan model.
-- *Instalasi Repositori dan Dependensi:* mengklon repositori resmi YOLOv5 dari Ultralytics, berpindah ke direktori tersebut, dan memasang pustaka pendukung yang diperlukan via `requirements.txt` serta `comet_ml`.
-
-**2. Manajemen dan Augmentasi Dataset**
-- *Pelabelan Citra (Annotation):* menganotasi objek sayuran pada gambar ke dalam kelas-kelas spesifik yang telah ditentukan, yaitu `kentang`, `tomat` (`tomato`), dan `wortel`, menggunakan platform labeler seperti Roboflow.
-- *Pembagian Data (Train/Test Split):* membagi proporsi dataset citra secara berimbang untuk melatih dan menguji model, dengan konfigurasi 70% data Train (1.168 gambar), 20% data Valid (334 gambar), dan 10% data Test (166 gambar).
-- *Augmentasi Gambar:* meningkatkan variasi data latihan secara buatan melalui teknik augmentasi seperti Flip Vertical, Rotation (antara −15° hingga +15°), Brightness (−20% hingga +20%), dan Blur (hingga 2.5px).
-- *Ekstraksi Data:* mengunduh dan mengekstrak file kompresi dataset citra (misalnya `DATA FINAL.zip`) ke direktori pengerjaan.
-- *Konfigurasi File YAML (`data.yaml`):* menyusun struktur direktori data latih (`train/images`), data validasi (`valid/images`), dan data uji (`test/images`), serta mendefinisikan indeks kelas objek: `0: kentang`, `1: tomat`, dan `2: wortel`.
-
-**3. Proses Pelatihan Model (Training)**
-- *Inisialisasi Pelatihan:* menjalankan skrip `train.py` dengan menentukan parameter arsitektur model (misalnya *weights* awal `yolov5n.pt` atau `yolov5s`), resolusi gambar input 640×640 piksel, *batch size* 16, serta total 200 *epochs*.
-- *Monitoring Hasil:* selama 200 *epochs* berjalan (memakan waktu ±3,64 jam), metrik performa seperti *box loss*, *class loss*, *precision*, *recall*, hingga mAP (*Mean Average Precision*) dipantau lewat log lokal maupun integrasi platform pihak ketiga seperti Comet.ml. Hasil pelatihan terbaik disimpan otomatis pada `runs/train/exp2/weights/best.pt`.
-
-**4. Ekspor dan Konversi Model (Deployment)**
-- Setelah mendapatkan bobot model terbaik (`best.pt`), model dikonversi ke format yang lebih ringan untuk kebutuhan implementasi, yaitu diekspor menjadi TensorFlow Lite (TFLite) menggunakan skrip `export.py` dengan ukuran gambar 640, tanpa kompresi int8 atau half (default FP32).
-
-
-**Alur perancangan software (subsistem akuisisi berat):**
-![PerancanganSoftware1](docs/images/diagram/perancangan-software1.png)
-
-**Sistem operasi & tooling**
-- Raspberry Pi OS (subsistem berat) / Ubuntu Server 22.04 LTS 64-bit (subsistem computer vision) — operasi *headless*
-- Raspberry Pi Imager + utilitas `rpiboot` (flashing eMMC CM4)
-- Visual Studio Code + ekstensi Remote-SSH
-- Docker (menjalankan n8n lokal) + Cloudflare Tunnel (akses publik webhook)
-
-**Library Python (Raspberry Pi)**
-- `RPi.GPIO` — kontrol GPIO (push button, HX711)
-- `hx711` — pembacaan load cell
-- `RPLCD` / `smbus2` — antarmuka LCD I2C
-- `requests` — transmisi HTTP ke Google Apps Script
-- `numpy`, `opencv-python (cv2)` — pengolahan citra
-- `tflite-runtime==2.13.0` — inferensi model YOLOv5n TFLite FP16
-
-**Pelatihan model & layanan cloud**
-- Roboflow (anotasi *bounding box* & augmentasi dataset), Google Colab (pelatihan YOLOv5n 200 epoch), YOLOv5 (Ultralytics)
-- Google Sheets + Google Apps Script (pencatatan data & foto ke Drive)
-- n8n (otomasi *workflow*), Fonnte API (gateway WhatsApp), Groq (inferensi LLM LLaMA 3.3 70B)
-
----
-
-## Struktur Folder Repositori
-
+**Struktur Proyek**
 ```
 Timbangan-IoT/
 ├── firmware/                  # Kode Python yang berjalan di Raspberry Pi CM4
@@ -143,11 +93,31 @@ Timbangan-IoT/
 │       └── hasil/             # Grafik pengujian, deteksi, chatbot, spreadsheet
 └── README.md
 ```
+**Alur pelatihan model deteksi jenis sayur (subsistem computer vision):**
+![PerancanganSoftware2](docs/images/diagram/perancangan-software2.png)
 
+**1. Persiapan Lingkungan dan Runtime**
+- *Pengaturan Akselerator Hardware:* menggunakan lingkungan komputasi yang mendukung akselerator GPU, seperti GPU T4 (Tesla T4), untuk mempercepat proses pelatihan model.
+- *Instalasi Repositori dan Dependensi:* mengklon repositori resmi YOLOv5 dari Ultralytics, berpindah ke direktori tersebut, dan memasang pustaka pendukung yang diperlukan via `requirements.txt` serta `comet_ml`.
+
+**2. Manajemen dan Augmentasi Dataset**
+- *Pelabelan Citra (Annotation):* menganotasi objek sayuran pada gambar ke dalam kelas-kelas spesifik yang telah ditentukan, yaitu `kentang`, `tomat` (`tomato`), dan `wortel`, menggunakan platform labeler seperti Roboflow.
+- *Pembagian Data (Train/Test Split):* membagi proporsi dataset citra secara berimbang untuk melatih dan menguji model, dengan konfigurasi 70% data Train (1.168 gambar), 20% data Valid (334 gambar), dan 10% data Test (166 gambar).
+- *Augmentasi Gambar:* meningkatkan variasi data latihan secara buatan melalui teknik augmentasi seperti Flip Vertical, Rotation (antara −15° hingga +15°), Brightness (−20% hingga +20%), dan Blur (hingga 2.5px).
+- *Ekstraksi Data:* mengunduh dan mengekstrak file kompresi dataset citra (misalnya `DATA FINAL.zip`) ke direktori pengerjaan.
+- *Konfigurasi File YAML (`data.yaml`):* menyusun struktur direktori data latih (`train/images`), data validasi (`valid/images`), dan data uji (`test/images`), serta mendefinisikan indeks kelas objek: `0: kentang`, `1: tomat`, dan `2: wortel`.
+
+**3. Proses Pelatihan Model (Training)**
+- *Inisialisasi Pelatihan:* menjalankan skrip `train.py` dengan menentukan parameter arsitektur model (misalnya *weights* awal `yolov5n.pt` atau `yolov5s`), resolusi gambar input 640×640 piksel, *batch size* 16, serta total 200 *epochs*.
+- *Monitoring Hasil:* selama 200 *epochs* berjalan (memakan waktu ±3,64 jam), metrik performa seperti *box loss*, *class loss*, *precision*, *recall*, hingga mAP (*Mean Average Precision*) dipantau lewat log lokal maupun integrasi platform pihak ketiga seperti Comet.ml. Hasil pelatihan terbaik disimpan otomatis pada `runs/train/exp2/weights/best.pt`.
+
+**4. Ekspor dan Konversi Model (Deployment)**
+- Setelah mendapatkan bobot model terbaik (`best.pt`), model dikonversi ke format yang lebih ringan untuk kebutuhan implementasi, yaitu diekspor menjadi TensorFlow Lite (TFLite) menggunakan skrip `export.py` dengan ukuran gambar 640, tanpa kompresi int8 atau half (default FP32).
+
+
+**Alur perancangan software (subsistem akuisisi berat):**
+![PerancanganSoftware1](docs/images/diagram/perancangan-software1.png)
 ---
-
-## Panduan Instalasi & Menjalankan Sistem
-
 1. **Flash OS ke eMMC CM4** — geser sakelar board I/O ke mode *boot* USB-C, hubungkan ke komputer, jalankan `rpiboot` agar eMMC terbaca sebagai drive, lalu tulis OS (Raspberry Pi OS / Ubuntu Server 22.04) beserta konfigurasi SSH menggunakan **Raspberry Pi Imager**. Kembalikan sakelar ke mode normal dan nyalakan ulang.
 2. **Konfigurasi awal sistem** — jalankan `sudo raspi-config` untuk mengaktifkan **SSH** dan antarmuka **I2C**/SPI, atur Wi-Fi, zona waktu, dan hostname.
 3. **Hubungkan VS Code Remote-SSH** ke Raspberry Pi untuk pengembangan headless.
