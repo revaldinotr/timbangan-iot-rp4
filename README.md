@@ -114,10 +114,9 @@ Timbangan-IoT/
 **4. Ekspor dan Konversi Model (Deployment)**
 - Setelah mendapatkan bobot model terbaik (`best.pt`), model dikonversi ke format yang lebih ringan untuk kebutuhan implementasi, yaitu diekspor menjadi TensorFlow Lite (TFLite) menggunakan skrip `export.py` dengan ukuran gambar 640, tanpa kompresi int8 atau half (default FP32).
 
-
 **Alur perancangan software (subsistem akuisisi berat):**
 ![PerancanganSoftware1](docs/images/diagram/perancangan-software1.png)
----
+
 1. **Flash OS ke eMMC CM4** — geser sakelar board I/O ke mode *boot* USB-C, hubungkan ke komputer, jalankan `rpiboot` agar eMMC terbaca sebagai drive, lalu tulis OS (Raspberry Pi OS / Ubuntu Server 22.04) beserta konfigurasi SSH menggunakan **Raspberry Pi Imager**. Kembalikan sakelar ke mode normal dan nyalakan ulang.
 2. **Konfigurasi awal sistem** — jalankan `sudo raspi-config` untuk mengaktifkan **SSH** dan antarmuka **I2C**/SPI, atur Wi-Fi, zona waktu, dan hostname.
 3. **Hubungkan VS Code Remote-SSH** ke Raspberry Pi untuk pengembangan headless.
