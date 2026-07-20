@@ -69,10 +69,6 @@ Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX7
 
 ## Software & Library
 
-**Alur perancangan software (subsistem akuisisi berat):**
-
-![PerancanganSoftware1](docs/images/diagram/perancangan-software1.png)
-
 **Alur pelatihan model deteksi jenis sayur (subsistem computer vision):**
 
 ![PerancanganSoftware2](docs/images/diagram/perancangan-software2.png)
@@ -96,6 +92,11 @@ Diagram di atas merangkum alur pelatihan model YOLOv5 untuk deteksi jenis sayur,
 
 **4. Ekspor dan Konversi Model (Deployment)**
 - Setelah mendapatkan bobot model terbaik (`best.pt`), model dikonversi ke format yang lebih ringan untuk kebutuhan implementasi, yaitu diekspor menjadi TensorFlow Lite (TFLite) menggunakan skrip `export.py` dengan ukuran gambar 640, tanpa kompresi int8 atau half (default FP32).
+
+
+**Alur perancangan software (subsistem akuisisi berat):**
+
+![PerancanganSoftware1](docs/images/diagram/perancangan-software1.png)
 
 **Sistem operasi & tooling**
 - Raspberry Pi OS (subsistem berat) / Ubuntu Server 22.04 LTS 64-bit (subsistem computer vision) — operasi *headless*
