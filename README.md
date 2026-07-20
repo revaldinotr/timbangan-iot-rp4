@@ -101,18 +101,25 @@ Diagram di atas merangkum alur pelatihan model YOLOv5 untuk deteksi jenis sayur:
 **1. Anotasi dataset di Roboflow**
 Gambar sayuran diberi label (*bounding box*) dengan kelas seperti tomat, kentang, dan wortel menggunakan Annotation Editor.
 
-**2. Pembagian dataset (Train/Test Split)** — Dataset dibagi menjadi 70% data latih (1.168 gambar), 20% validasi (334 gambar), dan 10% pengujian (166 gambar).
+**2. Pembagian dataset (Train/Test Split)** 
+Dataset dibagi menjadi 70% data latih (1.168 gambar), 20% validasi (334 gambar), dan 10% pengujian (166 gambar).
 
-**3. Augmentasi data** — Menambah variasi data latih dengan teknik seperti *flip* vertikal, rotasi (−15° hingga +15°), dan *brightness* (−20% hingga +20%) agar model lebih tangguh.
+**3. Augmentasi data** 
+Menambah variasi data latih dengan teknik seperti *flip* vertikal, rotasi (−15° hingga +15°), dan *brightness* (−20% hingga +20%) agar model lebih tangguh.
 
-**4. Pengaturan akselerator hardware** — Di Google Colab, *runtime* diatur menggunakan GPU T4 untuk mempercepat proses pelatihan.
-**5. Konfigurasi `data.yaml`** — Menentukan *path* dataset (`train`/`valid`/`test` images) serta daftar kelas: `0 = kentang`, `1 = tomat`, `2 = wortel`.
+**4. Pengaturan akselerator hardware** 
+Di Google Colab, *runtime* diatur menggunakan GPU T4 untuk mempercepat proses pelatihan.
 
-**6. Persiapan lingkungan pelatihan** — Meng-*clone* repositori YOLOv5 dari GitHub, menginstal *requirements* (termasuk `comet_ml`), lalu meng-*unzip* dataset (`DATA FINAL.zip`) ke lingkungan Colab.
+**5. Konfigurasi `data.yaml`** 
+Menentukan *path* dataset (`train`/`valid`/`test` images) serta daftar kelas: `0 = kentang`, `1 = tomat`, `2 = wortel`.
+
+**6. Persiapan lingkungan pelatihan** 
+Meng-*clone* repositori YOLOv5 dari GitHub, menginstal *requirements* (termasuk `comet_ml`), lalu meng-*unzip* dataset (`DATA FINAL.zip`) ke lingkungan Colab.
 
 **7. Pelatihan model** — Menjalankan `train.py` dengan parameter seperti ukuran gambar 640, *batch* 16, dan sejumlah *epoch*. Hasil pelatihan dan bobot terbaik (`best.pt`) disimpan di `runs/train/exp2`.
 
-**8. Validasi dan ekspor model** — Model divalidasi (menghasilkan metrik seperti mAP, *precision*, *recall* per kelas), lalu diekspor ke format TFLite menggunakan `export.py` agar bisa digunakan di perangkat *mobile*/*embedded*.
+**8. Validasi dan ekspor model** 
+Model divalidasi (menghasilkan metrik seperti mAP, *precision*, *recall* per kelas), lalu diekspor ke format TFLite menggunakan `export.py` agar bisa digunakan di perangkat *mobile*/*embedded*.
 
 **Alur perancangan software (subsistem akuisisi berat):**
 ![PerancanganSoftware1](docs/images/diagram/perancangan-software1.png)
