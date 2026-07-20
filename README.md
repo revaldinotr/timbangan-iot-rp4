@@ -68,8 +68,8 @@ Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX7
 ---
 
 ## Software & Library
-![Perancangan Software1](docs/images/diagram/perancangan-software1.png)
-![Perancangan Software2](docs/images/diagram/perancangan-software2.png)
+![PerancanganSoftware1](docs/images/diagram/perancangan-software1.png)
+![PerancanganSoftware2](docs/images/diagram/perancangan-software2.png)
 **Sistem operasi & tooling**
 - Raspberry Pi OS (subsistem berat) / Ubuntu Server 22.04 LTS 64-bit (subsistem computer vision) — operasi *headless*
 - Raspberry Pi Imager + utilitas `rpiboot` (flashing eMMC CM4)
