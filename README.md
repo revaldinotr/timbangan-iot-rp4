@@ -240,7 +240,9 @@ Data stok sayur di Google Sheets diakses otomatis oleh workflow n8n melalui Goog
 
 Saat Raspberry Pi baru terhubung ke daya dan Wi-Fi, sistem menjalani proses inisialisasi yang mencakup *booting* OS, *starting* *Docker container* n8n, hingga pembentukan koneksi Cloudflare Tunnel, dengan total *delay* sekitar ±2 menit sebelum sistem siap digunakan. Kondisi ini terkonfirmasi pada pengujian, di mana pesan yang dikirim pukul 9.18 pm dan 9.19 pm baru mendapatkan respons pada pukul 9.20 pm. Respons yang muncul kemudian menampilkan alur autentikasi PIN secara lengkap, mulai dari notifikasi bahwa pengguna belum *login*, instruksi untuk mengetik `LOGIN`, permintaan PIN, hingga konfirmasi *login* berhasil dengan sesi aktif selama 60 menit.
 
-| ![Tangkapan Layar Chatbot WhatsApp Awal Booting](docs/images/hasil/chatbot-booting.jpeg) |
+<p align="center">
+  <img src="docs/images/hasil/chatbot-booting.jpeg" alt="Tangkapan Layar Chatbot WhatsApp Awal Booting">
+</p>
 
 *Chatbot* yang dikembangkan mampu:
 - menjawab ketersediaan stok sayur secara *real-time*, lengkap dengan detail berat dan *timestamp* pencatatan;
