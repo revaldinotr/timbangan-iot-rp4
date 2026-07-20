@@ -70,7 +70,6 @@ Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX7
 ## Software & Library
 
 **Alur pelatihan model deteksi jenis sayur (subsistem computer vision):**
-
 ![PerancanganSoftware2](docs/images/diagram/perancangan-software2.png)
 
 Diagram di atas merangkum alur pelatihan model YOLOv5 untuk deteksi jenis sayur, dari persiapan lingkungan hingga ekspor model:
@@ -95,7 +94,6 @@ Diagram di atas merangkum alur pelatihan model YOLOv5 untuk deteksi jenis sayur,
 
 
 **Alur perancangan software (subsistem akuisisi berat):**
-
 ![PerancanganSoftware1](docs/images/diagram/perancangan-software1.png)
 
 **Sistem operasi & tooling**
