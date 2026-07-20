@@ -96,23 +96,17 @@ Timbangan-IoT/
 **Alur pelatihan model deteksi jenis sayur (subsistem computer vision):**
 ![PerancanganSoftware2](docs/images/diagram/perancangan-software2.png)
 
-**1. Persiapan Lingkungan dan Runtime**
-- *Pengaturan Akselerator Hardware:* menggunakan lingkungan komputasi yang mendukung akselerator GPU, seperti GPU T4 (Tesla T4), untuk mempercepat proses pelatihan model.
-- *Instalasi Repositori dan Dependensi:* mengklon repositori resmi YOLOv5 dari Ultralytics, berpindah ke direktori tersebut, dan memasang pustaka pendukung yang diperlukan via `requirements.txt` serta `comet_ml`.
+Diagram di atas merangkum alur pelatihan model YOLOv5 untuk deteksi jenis sayur:
 
-**2. Manajemen dan Augmentasi Dataset**
-- *Pelabelan Citra (Annotation):* menganotasi objek sayuran pada gambar ke dalam kelas-kelas spesifik yang telah ditentukan, yaitu `kentang`, `tomat` (`tomato`), dan `wortel`, menggunakan platform labeler seperti Roboflow.
-- *Pembagian Data (Train/Test Split):* membagi proporsi dataset citra secara berimbang untuk melatih dan menguji model, dengan konfigurasi 70% data Train (1.168 gambar), 20% data Valid (334 gambar), dan 10% data Test (166 gambar).
-- *Augmentasi Gambar:* meningkatkan variasi data latihan secara buatan melalui teknik augmentasi seperti Flip Vertical, Rotation (antara −15° hingga +15°), Brightness (−20% hingga +20%), dan Blur (hingga 2.5px).
-- *Ekstraksi Data:* mengunduh dan mengekstrak file kompresi dataset citra (misalnya `DATA FINAL.zip`) ke direktori pengerjaan.
-- *Konfigurasi File YAML (`data.yaml`):* menyusun struktur direktori data latih (`train/images`), data validasi (`valid/images`), dan data uji (`test/images`), serta mendefinisikan indeks kelas objek: `0: kentang`, `1: tomat`, dan `2: wortel`.
-
-**3. Proses Pelatihan Model (Training)**
-- *Inisialisasi Pelatihan:* menjalankan skrip `train.py` dengan menentukan parameter arsitektur model (misalnya *weights* awal `yolov5n.pt` atau `yolov5s`), resolusi gambar input 640×640 piksel, *batch size* 16, serta total 200 *epochs*.
-- *Monitoring Hasil:* selama 200 *epochs* berjalan (memakan waktu ±3,64 jam), metrik performa seperti *box loss*, *class loss*, *precision*, *recall*, hingga mAP (*Mean Average Precision*) dipantau lewat log lokal maupun integrasi platform pihak ketiga seperti Comet.ml. Hasil pelatihan terbaik disimpan otomatis pada `runs/train/exp2/weights/best.pt`.
-
-**4. Ekspor dan Konversi Model (Deployment)**
-- Setelah mendapatkan bobot model terbaik (`best.pt`), model dikonversi ke format yang lebih ringan untuk kebutuhan implementasi, yaitu diekspor menjadi TensorFlow Lite (TFLite) menggunakan skrip `export.py` dengan ukuran gambar 640, tanpa kompresi int8 atau half (default FP32).
+**1. Anotasi dataset di Roboflow**
+Gambar sayuran diberi label (*bounding box*) dengan kelas seperti tomat, kentang, dan wortel menggunakan Annotation Editor.
+**2. Pembagian dataset (Train/Test Split)** — Dataset dibagi menjadi 70% data latih (1.168 gambar), 20% validasi (334 gambar), dan 10% pengujian (166 gambar).
+**3. Augmentasi data** — Menambah variasi data latih dengan teknik seperti *flip* vertikal, rotasi (−15° hingga +15°), dan *brightness* (−20% hingga +20%) agar model lebih tangguh.
+**4. Pengaturan akselerator hardware** — Di Google Colab, *runtime* diatur menggunakan GPU T4 untuk mempercepat proses pelatihan.
+**5. Konfigurasi `data.yaml`** — Menentukan *path* dataset (`train`/`valid`/`test` images) serta daftar kelas: `0 = kentang`, `1 = tomat`, `2 = wortel`.
+**6. Persiapan lingkungan pelatihan** — Meng-*clone* repositori YOLOv5 dari GitHub, menginstal *requirements* (termasuk `comet_ml`), lalu meng-*unzip* dataset (`DATA FINAL.zip`) ke lingkungan Colab.
+**7. Pelatihan model** — Menjalankan `train.py` dengan parameter seperti ukuran gambar 640, *batch* 16, dan sejumlah *epoch*. Hasil pelatihan dan bobot terbaik (`best.pt`) disimpan di `runs/train/exp2`.
+**8. Validasi dan ekspor model** — Model divalidasi (menghasilkan metrik seperti mAP, *precision*, *recall* per kelas), lalu diekspor ke format TFLite menggunakan `export.py` agar bisa digunakan di perangkat *mobile*/*embedded*.
 
 **Alur perancangan software (subsistem akuisisi berat):**
 ![PerancanganSoftware1](docs/images/diagram/perancangan-software1.png)
