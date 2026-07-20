@@ -282,13 +282,11 @@ Proyek ini merupakan **karya Tugas Akhir akademik** Politeknik Negeri Sriwijaya 
 ---
 
 ## Penulis
-
 <table>
   <thead>
     <tr>
       <th align="center">Foto</th>
       <th align="left">Penulis</th>
-      <th align="left">NIM</th>
       <th align="left">Subsistem</th>
     </tr>
   </thead>
@@ -296,18 +294,15 @@ Proyek ini merupakan **karya Tugas Akhir akademik** Politeknik Negeri Sriwijaya 
     <tr>
       <td align="center"><img src="docs/images/penulis/reval.jpg" width="90" alt="Reval Dino Try Rahmady"></td>
       <td align="left"><a href="https://www.linkedin.com/in/revaldino"><b>Reval Dino Try Rahmady</b></a></td>
-      <td align="left">062330320631</td>
       <td align="left">Sistem Akuisisi Data Berat (Load Cell + HX711 + IoT)</td>
     </tr>
     <tr>
       <td align="center"><img src="docs/images/penulis/aryo.jpg" width="90" alt="Aryo Dwi Cahyo"></td>
       <td align="left"><a href="https://www.linkedin.com/in/aryo-dwi-cahyo-94566a3a5"><b>Aryo Dwi Cahyo</b></a></td>
-      <td align="left">062330320613</td>
       <td align="left">Penyortir Cerdas Jenis Sayuran (YOLOv5n + Computer Vision)</td>
     </tr>
   </tbody>
 </table>
 
-Jurusan Teknik Elektro — **Politeknik Negeri Sriwijaya**, Palembang, 2026.
 
 🔗 Repositori: [github.com/revaldinotr/timbangan-iot-rp4](https://github.com/revaldinotr/timbangan-iot-rp4)
