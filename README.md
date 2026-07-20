@@ -212,7 +212,10 @@ Dataset 1.668 gambar (kentang 575, tomat 684, wortel 409), 200 epoch, evaluasi p
 Deteksi *real-time* (TFLite FP16 di CM4): **48/60 percobaan berhasil (80%)**, confidence rata-rata 80,6%, kecepatan **10-20 FPS** — tomat 90%, kentang 80%, wortel 70%.
 
 ![Confusion Matrix](docs/images/hasil/confusion-matrix.png)
-![Hasil Deteksi Real-time](docs/images/hasil/deteksi-realtime.jpeg)
+<p align="center">
+  <img src="docs/images/hasil/deteksi-realtime.jpeg" alt="Hasil Deteksi Real-time">
+</p>
+
 
 ### 5. Integrasi Cloud & Chatbot
 Pengujian dilakukan dengan menempatkan sampel sayuran di atas timbangan, menunggu LCD menampilkan pembacaan yang stabil, lalu menekan tombol pengiriman. Alur tampilan LCD berlangsung tiga tahap: kondisi awal (`Berat: 6.93 KG` / `Jenis: Tomat`) → status unggah (`Mengirim data.. / Mohon tunggu...`) saat berat, jenis, dan foto tangkapan kamera diunggah ke Google Apps Script → konfirmasi berhasil (`TERKIRIM + FOTO! 6.9kg Tomat`). Hasil: **13/15 percobaan berhasil** (waktu kirim 2–6 detik; kegagalan hanya terjadi saat Wi-Fi terputus/tidak stabil)..
