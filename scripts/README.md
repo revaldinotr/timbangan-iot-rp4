@@ -3,7 +3,7 @@
 1. Aktifkan **toggle switch** Power Supply sehingga Raspberry Pi CM4 booting dan otomatis menjalankan skrip serta layanan n8n.
 3. Letakkan sayuran di atas platform timbangan (titik uji di tengah alas, area bertanda). Load cell membaca berat, webcam memindai jenis sayuran; jika objek tidak dikenali, sistem memindai ulang.
 
-![Titik Uji](timbangan-iot-rp4/docs/images/alat/titik-uji.png)
+<img width="887" height="376" alt="titik-uji" src="https://github.com/user-attachments/assets/8e8f19a0-2aa3-4635-9c2e-1ac055704390" />
 
 <p align="center">
   <img width="550" height="250" alt="Load Cell Berat Sayur" src="https://github.com/user-attachments/assets/a45ad6e0-3718-4462-b722-91ba75fed9d0" />
