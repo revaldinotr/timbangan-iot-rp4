@@ -124,6 +124,35 @@ Model divalidasi (menghasilkan metrik seperti mAP, *precision*, *recall* per kel
 **Alur perancangan software (subsistem akuisisi berat):**
 ![PerancanganSoftware1](docs/images/diagram/perancangan-software1.png)
 
+
+## Installation
+
+To run this project, you need [Python 3.5](https://docs.python.org/3/) or higher installed on your system. Follow these steps to get started:
+
+- Clone the repository and navigate to the project directory: :
+```bash
+  git clone https://github.com/kiena-dev/YOLOv5-tensorflow-lite-Raspberry-Pi.git
+  cd YOLOv5-tensorflow-lite-Raspberry-Pi
+```
+
+- Create a Python virtual environment (optional but recommended):
+```bash
+  python3 -m venv venv
+```
+
+- Activate the virtual environment:
+```bash
+  source venv/bin/activate
+```
+
+- Install the required dependencies using pip3:
+```bash
+  pip3 install -r requirements.txt
+```
+
+Now you have successfully installed the project and its dependencies.
+
+
 **1. Flash OS ke eMMC CM4**
 Geser sakelar board I/O ke mode *boot* USB-C, hubungkan ke komputer, jalankan `rpiboot` agar eMMC terbaca sebagai drive, lalu tulis OS (Raspberry Pi OS / Ubuntu Server 22.04) beserta konfigurasi SSH menggunakan **Raspberry Pi Imager**. Kembalikan sakelar ke mode normal dan nyalakan ulang.
 
@@ -137,6 +166,10 @@ Jalankan `sudo raspi-config` untuk mengaktifkan **SSH** dan antarmuka **I2C**/SP
    git clone https://github.com/revaldinotr/timbangan-iot-rp4
    cd timbangan-iot-rp4
    ```
+**5. Buat lingkungan virtual Python** (opsional, tetapi disarankan):
+  ```bash
+    python3 -m venv venv
+  ```
 **5. Instal dependensi Python** (verifikasi dengan `pip list` / `pip show`):
    ```bash
    pip install RPi.GPIO hx711 RPLCD smbus2 requests numpy opencv-python tflite-runtime==2.13.0
