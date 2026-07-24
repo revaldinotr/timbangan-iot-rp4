@@ -172,15 +172,16 @@ Jalankan `sudo raspi-config` untuk mengaktifkan **SSH** dan antarmuka **I2C**/SP
   impor `IoT/n8n/manajemen-stok-sayur-whatsapp-pin.json`, konfigurasi kredensial Fonnte API, Google Sheets, dan Groq.
 
 **11. (Opsional) Verifikasi karakteristik sensor**:
+
     ```bash
-    python3 firmware/uji_sistem.py   # Mode 1: Akurasi & Presisi | Mode 2: Stabilitas
+    python uji_sistem.py   # Mode 1: Akurasi & Presisi | Mode 2: Stabilitas
     ```
 
 **12. Jalankan program utama**:
     ```bash
-    python3 firmware/main.py
+    python3 main.py
     ```
-    Catatan: setelah perangkat menyala, seluruh layanan (boot OS, container n8n, Cloudflare Tunnel) membutuhkan ±2 menit hingga chatbot siap merespons.
+    Catatan: setelah perangkat menyala, seluruh layanan (boot OS, script py, container n8n, Cloudflare Tunnel) membutuhkan ±2 menit hingga chatbot siap merespons.
 
 ---
 
