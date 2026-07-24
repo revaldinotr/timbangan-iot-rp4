@@ -132,7 +132,7 @@ Jalankan `sudo raspi-config` untuk mengaktifkan **SSH** dan antarmuka **I2C**/SP
 
 **3. Hubungkan VS Code Remote-SSH** ke Raspberry Pi untuk pengembangan headless.
 
-**4. Clone repositori**:
+**4. Clone repositori** pada direktori proyek:
    ```bash
    git clone https://github.com/revaldinotr/timbangan-iot-rp4
    cd timbangan-iot-rp4
