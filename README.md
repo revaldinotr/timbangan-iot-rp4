@@ -124,35 +124,6 @@ Model divalidasi (menghasilkan metrik seperti mAP, *precision*, *recall* per kel
 **Alur perancangan software (subsistem akuisisi berat):**
 ![PerancanganSoftware1](docs/images/diagram/perancangan-software1.png)
 
-
-## Installation
-
-To run this project, you need [Python 3.5](https://docs.python.org/3/) or higher installed on your system. Follow these steps to get started:
-
-- Clone the repository and navigate to the project directory: :
-```bash
-  git clone https://github.com/kiena-dev/YOLOv5-tensorflow-lite-Raspberry-Pi.git
-  cd YOLOv5-tensorflow-lite-Raspberry-Pi
-```
-
-- Create a Python virtual environment (optional but recommended):
-```bash
-  python3 -m venv venv
-```
-
-- Activate the virtual environment:
-```bash
-  source venv/bin/activate
-```
-
-- Install the required dependencies using pip3:
-```bash
-  pip3 install -r requirements.txt
-```
-
-Now you have successfully installed the project and its dependencies.
-
-
 **1. Flash OS ke eMMC CM4**
 Geser sakelar board I/O ke mode *boot* USB-C, hubungkan ke komputer, jalankan `rpiboot` agar eMMC terbaca sebagai drive, lalu tulis OS (Raspberry Pi OS / Ubuntu Server 22.04) beserta konfigurasi SSH menggunakan **Raspberry Pi Imager**. Kembalikan sakelar ke mode normal dan nyalakan ulang.
 
@@ -170,22 +141,32 @@ Jalankan `sudo raspi-config` untuk mengaktifkan **SSH** dan antarmuka **I2C**/SP
   ```bash
     python3 -m venv venv
   ```
-**5. Instal dependensi Python** (verifikasi dengan `pip list` / `pip show`):
+- Aktifkan lingkungan virtual:
+```bash
+  source venv/bin/activate
+```
+
+**6. Instal dependensi yang diperlukan menggunakan pip3** :
+```bash
+  pip3 install -r requirements.txt
+```
+
+**7. Rakit perangkat keras** sesuai diagram pengawatan (HX711 → GPIO17/27, LCD I2C → SDA/SCL, push button → GPIO22, webcam → USB).
+
+**7. Kalibrasi load cell** :
    ```bash
-   pip install RPi.GPIO hx711 RPLCD smbus2 requests numpy opencv-python tflite-runtime==2.13.0
+   python kalibrasi.py
    ```
-**6. Rakit perangkat keras** sesuai diagram pengawatan (HX711 → GPIO17/27, LCD I2C → SDA/SCL, push button → GPIO22, webcam → USB).
+   Ikuti instruksi (tare kosong → letakkan beban acuan 1,00 kg → catat `CALIBRATION_FACTOR`), lalu masukkan nilainya ke konfigurasi script utama.
+   
+**9. Deploy Google Apps Script**
+  salin `cloud/pb_to_sheets.gs` ke proyek Apps Script yang terikat pada Google Sheets, *deploy* sebagai *web app*, lalu isi `GOOGLE_SHEETS_SCRIPT_ID` pada konfigurasi firmware.
 
-**7. Kalibrasi load cell**:
-   ```bash
-   python3 firmware/kalibrasi.py
-   ```
-   Ikuti instruksi (tare kosong → letakkan beban acuan 1,00 kg → catat `CALIBRATION_FACTOR`), lalu masukkan nilainya ke konfigurasi `firmware/main.py`.
-**8. Deploy Google Apps Script** — salin `cloud/pb_to_sheets.gs` ke proyek Apps Script yang terikat pada Google Sheets, *deploy* sebagai *web app*, lalu isi `GOOGLE_SHEETS_SCRIPT_ID` pada konfigurasi firmware.
+**10. Siapkan n8n + Cloudflare Tunnel** :
+  instal Docker (`curl` installer, `sudo usermod -aG docker $USER`), jalankan container n8n, buat *tunnel* di dashboard Cloudflare Zero Trust (Networks → Tunnels), arahkan *public hostname* ke port n8n, dan jalankan perintah konektor di terminal Raspberry Pi.
 
-**9. Siapkan n8n + Cloudflare Tunnel** — instal Docker (`curl` installer, `sudo usermod -aG docker $USER`), jalankan container n8n, buat *tunnel* di dashboard Cloudflare Zero Trust (Networks → Tunnels), arahkan *public hostname* ke port n8n, dan jalankan perintah konektor di terminal Raspberry Pi.
-
-**10. Import workflow n8n** — impor `cloud/n8n/manajemen-stok-sayur-whatsapp-pin.json`, konfigurasi kredensial Fonnte API, Google Sheets, dan Groq.
+**10. Import workflow n8n** :
+  impor `cloud/n8n/manajemen-stok-sayur-whatsapp-pin.json`, konfigurasi kredensial Fonnte API, Google Sheets, dan Groq.
 
 **11. (Opsional) Verifikasi karakteristik sensor**:
     ```bash
