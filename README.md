@@ -160,12 +160,15 @@ Jalankan `sudo raspi-config` untuk mengaktifkan **SSH** dan antarmuka **I2C**/SP
    Ikuti instruksi (tare kosong → letakkan beban acuan 1,00 kg → catat `CALIBRATION_FACTOR`), lalu masukkan nilainya ke konfigurasi script utama.
    
 **9. Deploy Google Apps Script**
+
   salin `cloud/pb_to_sheets.gs` ke proyek Apps Script yang terikat pada Google Sheets, *deploy* sebagai *web app*, lalu isi `GOOGLE_SHEETS_SCRIPT_ID` pada konfigurasi firmware.
 
 **10. Siapkan n8n + Cloudflare Tunnel** :
+
   instal Docker (`curl` installer, `sudo usermod -aG docker $USER`), jalankan container n8n, buat *tunnel* di dashboard Cloudflare Zero Trust (Networks → Tunnels), arahkan *public hostname* ke port n8n, dan jalankan perintah konektor di terminal Raspberry Pi.
 
 **10. Import workflow n8n** :
+
   impor `cloud/n8n/manajemen-stok-sayur-whatsapp-pin.json`, konfigurasi kredensial Fonnte API, Google Sheets, dan Groq.
 
 **11. (Opsional) Verifikasi karakteristik sensor**:
