@@ -1,17 +1,9 @@
 #!/usr/bin/env python3
 """
-scripts/common.py — Fondasi bersama: KONFIGURASI + LOGGER + SHARED STATE.
-
-AMAN DI-COMMIT KE GITHUB.
-Tidak ada satu pun kredensial di file ini. Nilai rahasia dibaca dari
-environment variable (atau file `.env` yang TIDAK ikut di-commit).
-
+KONFIGURASI + LOGGER + SHARED STATE.
+TIDAK meng-import hardware apa pun (GPIO/HX711/cv2).
     cp .env.example .env
     nano .env          # isi GOOGLE_SHEETS_SCRIPT_ID milikmu
-
-Modul ini sengaja TIDAK meng-import hardware apa pun (GPIO/HX711/cv2), sehingga
-bisa dipakai main.py, thread_berat.py, thread_jenis.py, dan IoT.py tanpa saling
-bergantung — menghindari circular import.
 """
 
 import os
