@@ -1,0 +1,45 @@
+# =====================================================================
+# n8n di Raspberry Pi — diakses lewat Cloudflare Tunnel
+# ---------------------------------------------------------------------
+#   cp .env.example .env → isi → docker compose up -d
+#
+# Port 5678 sengaja di-bind ke 127.0.0.1 saja: satu-satunya jalan masuk
+# dari internet adalah lewat tunnel. Jangan port-forward port ini.
+# =====================================================================
+
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    container_name: n8n-timbangan
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5678:5678"
+    environment:
+      # Domain & webhook
+      - N8N_HOST=${N8N_HOST}
+      - N8N_PROTOCOL=${N8N_PROTOCOL:-https}
+      - N8N_PORT=5678
+      - WEBHOOK_URL=${WEBHOOK_URL}
+
+      # Zona waktu
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE:-Asia/Jakarta}
+      - TZ=${TZ:-Asia/Jakarta}
+
+      # PIN chatbot — dibaca node Code lewat process.env
+      - STOK_PIN=${STOK_PIN}
+      - N8N_BLOCK_ENV_ACCESS_IN_NODE=false
+
+      # Keamanan
+      - N8N_BASIC_AUTH_ACTIVE=${N8N_BASIC_AUTH_ACTIVE:-true}
+      - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
+
+      - N8N_PERSONALIZATION_ENABLED=${N8N_PERSONALIZATION_ENABLED:-false}
+      - N8N_DIAGNOSTICS_ENABLED=${N8N_DIAGNOSTICS_ENABLED:-false}
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ../../n8n/workflows:/workflows:ro
+
+volumes:
+  n8n_data:

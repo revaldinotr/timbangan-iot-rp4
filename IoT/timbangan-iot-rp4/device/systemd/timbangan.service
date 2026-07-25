@@ -1,0 +1,41 @@
+# =====================================================================
+# systemd unit — jalankan timbangan otomatis saat Raspberry Pi menyala
+# ---------------------------------------------------------------------
+#   sudo cp device/systemd/timbangan.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now timbangan
+#   sudo journalctl -u timbangan -f          # lihat log
+# =====================================================================
+
+[Unit]
+Description=Timbangan IoT - Akuisisi Berat & Jenis Sayuran
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+
+# Sesuaikan bila repo diletakkan di lokasi lain
+WorkingDirectory=/home/pi/timbangan-iot-rp4/device
+ExecStart=/usr/bin/python3 /home/pi/timbangan-iot-rp4/device/main.py
+
+# Output langsung terlihat di journalctl tanpa tertahan buffer
+Environment=PYTHONUNBUFFERED=1
+
+Restart=on-failure
+RestartSec=10
+
+# Beri waktu untuk melepas kamera, LCD, dan GPIO dengan rapi
+TimeoutStopSec=20
+KillSignal=SIGINT
+
+# Akses perangkat keras
+SupplementaryGroups=gpio i2c video
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

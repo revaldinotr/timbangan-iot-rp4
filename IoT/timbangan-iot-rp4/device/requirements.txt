@@ -1,0 +1,25 @@
+# ── Dependensi perangkat (Raspberry Pi CM4 / Pi OS 64-bit) ──
+#     pip install -r requirements.txt
+
+# Sensor & GPIO
+RPi.GPIO==0.7.1
+hx711==1.1.2.3
+
+# Tampilan LCD I2C 16x2
+RPLCD==1.3.1
+smbus2==0.4.3
+
+# Visi komputer
+opencv-python-headless==4.10.0.84
+numpy==1.26.4
+
+# Inferensi model YOLOv5 TFLite
+# Pilih SALAH SATU:
+#   (a) tflite-runtime — ringan, disarankan untuk CM4
+#       Pasang sesuai versi Python & arsitektur Anda, mis.:
+#       pip install https://github.com/google-coral/pycoral/releases/download/v2.0.0/tflite_runtime-2.5.0.post1-cp39-cp39-linux_aarch64.whl
+#   (b) tensorflow — jauh lebih berat, hanya bila (a) tidak tersedia
+#       pip install tensorflow
+
+# Jaringan
+requests==2.32.3
