@@ -1,25 +1,4 @@
-# 🥔🍅🥕 Deteksi Sayuran dengan YOLOv5
-
-Proyek *object detection* untuk mendeteksi tiga jenis sayuran — **kentang**, **tomat**, dan **wortel** — menggunakan [Ultralytics YOLOv5](https://github.com/ultralytics/yolov5). Model dilatih pada dataset kustom di Google Colab (GPU Tesla T4), lalu diekspor ke format **ONNX** dan **TFLite** agar siap dipakai untuk *deployment* (misalnya di aplikasi mobile atau perangkat *edge*).
-
----
-
-## 📋 Daftar Isi
-
-- [Deskripsi](#-deskripsi)
-- [Kelas yang Dideteksi](#-kelas-yang-dideteksi)
-- [Struktur Dataset](#-struktur-dataset)
-- [Persiapan & Instalasi](#-persiapan--instalasi)
-- [Melatih Model (Training)](#-melatih-model-training)
-- [Hasil Pelatihan](#-hasil-pelatihan)
-- [Inferensi (Deteksi)](#-inferensi-deteksi)
-- [Ekspor Model](#-ekspor-model)
-- [Struktur Output](#-struktur-output)
-- [Catatan & Kendala](#-catatan--kendala)
-
----
-
-## 📖 Deskripsi
+## Deskripsi
 
 Proyek ini menggunakan varian ringan **YOLOv5n** (nano) sebagai model dasar (*pretrained weights*), kemudian dilakukan *fine-tuning* pada dataset sayuran kustom. Seluruh alur kerja — mulai dari *training*, validasi, hingga ekspor model — dijalankan pada notebook Google Colab.
 
@@ -35,7 +14,7 @@ Spesifikasi lingkungan pelatihan:
 
 ---
 
-## 🏷️ Kelas yang Dideteksi
+## Kelas yang Dideteksi
 
 Model dilatih untuk mengenali **3 kelas**:
 
@@ -47,7 +26,7 @@ Model dilatih untuk mengenali **3 kelas**:
 
 ---
 
-## 📂 Struktur Dataset
+## Struktur Dataset
 
 Dataset (`DATA FINAL.zip`) disusun dalam format YOLO dan dibagi menjadi *train* / *valid* / *test*. Setiap gambar memiliki file label `.txt` dengan format `class x_center y_center width height` (ternormalisasi).
 
@@ -78,7 +57,7 @@ names: ['kentang', 'tomat', 'wortel']
 
 ---
 
-## ⚙️ Persiapan & Instalasi
+## Persiapan & Instalasi
 
 Clone repositori YOLOv5 dan pasang dependensinya:
 
@@ -104,7 +83,7 @@ unzip "/content/DATA FINAL.zip"
 
 ---
 
-## 🚀 Melatih Model (Training)
+## Melatih Model (Training)
 
 Latih model YOLOv5n pada dataset kustom:
 
@@ -134,7 +113,7 @@ Waktu pelatihan: **±3,6 jam** untuk 200 epoch pada Tesla T4.
 
 ---
 
-## 📊 Hasil Pelatihan
+## Hasil Pelatihan
 
 Hasil validasi pada bobot terbaik (`best.pt`) setelah 200 epoch:
 
@@ -153,7 +132,7 @@ Grafik hasil (`results.png`) dan *confusion matrix* (`confusion_matrix.png`) ter
 
 ---
 
-## 🔍 Inferensi (Deteksi)
+## Inferensi (Deteksi)
 
 Jalankan deteksi menggunakan model hasil pelatihan:
 
@@ -180,7 +159,7 @@ Hasil deteksi disimpan di `runs/detect/exp/`.
 
 ---
 
-## 📦 Ekspor Model
+## Ekspor Model
 
 Model dapat dikonversi ke berbagai format untuk *deployment*.
 
@@ -205,18 +184,18 @@ python export.py \
   --simplify
 ```
 
-> ⚠️ **Catatan:** Ekspor TFLite **FP16** (`--half`) hanya bisa dilakukan dengan GPU. Jika dijalankan di CPU akan muncul error:
+> **Catatan:** Ekspor TFLite **FP16** (`--half`) hanya bisa dilakukan dengan GPU. Jika dijalankan di CPU akan muncul error:
 > `AssertionError: --half only compatible with GPU export, i.e. use --device 0`.
 > Gunakan `--device 0` bila ingin ekspor FP16.
 
 ---
 
-## 🗂️ Struktur Output
+## Struktur Output
 
 Setelah pelatihan dan ekspor, file-file penting dikumpulkan ke dalam satu paket `.zip` untuk diunduh:
 
 ```
-yolov5_training_package.zip
+yolov5_training_package
 ├── best.pt                 # bobot PyTorch terbaik
 ├── best.onnx               # model format ONNX
 ├── best-fp16.tflite        # model format TFLite
@@ -230,20 +209,9 @@ Skrip pengumpulan file mencari pola seperti `**/best.pt`, `**/*.onnx`, `**/resul
 
 ---
 
-## 📝 Catatan & Kendala
-
-- **Ekspor FP16 di CPU gagal** — gunakan GPU (`--device 0`) untuk `--half`.
-- **Peringatan konversi ONNX opset** — TensorFlow 2.20.0 lebih baru dari 2.13.1 sehingga bisa memicu isu saat ekspor TFLite ([issue #12489](https://github.com/ultralytics/yolov5/issues/12489)). Disarankan `opset_version >= 18`.
-- **Kelas `wortel` perlu perbaikan** — pertimbangkan menambah/menyeimbangkan data dan augmentasi untuk meningkatkan recall.
-
----
-
-## 🔗 Referensi
-
 - [Ultralytics YOLOv5 – GitHub](https://github.com/ultralytics/yolov5)
 - [Dokumentasi Ultralytics](https://docs.ultralytics.com/)
 - [Comet – YOLOv5 Integration](https://docs.ultralytics.com/yolov5/tutorials/comet_logging_integration/)
 
 ---
 
-<p align="center">Dibuat dengan ❤️ menggunakan Ultralytics YOLOv5</p>
