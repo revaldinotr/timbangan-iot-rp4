@@ -50,34 +50,53 @@ tempel ke Fonnte → **Device** → **Webhook URL**.
 
 ---
 
-## Menjalankan n8n Terpisah
+# Pemecahan Masalah
 
-Bila n8n dijalankan di mesin lain (bukan Raspberry Pi yang sama):
+## Bot tidak membalas sama sekali
 
-```bash
-cp ../infra/raspberry-pi/.env.example .env
-nano .env
-docker compose up -d
-```
+**1. Cek workflow aktif.** Toggle **Active** di kanan atas harus menyala. Webhook test
+hanya hidup 120 detik setelah klik "Listen".
 
-Untuk pemasangan di Raspberry Pi bersama Cloudflare Tunnel, gunakan
-[`../infra/raspberry-pi/`](../infra/raspberry-pi/).
+**2. Cek URL webhook di Fonnte.** Harus **Production URL**, bukan Test URL. Salin ulang
+dari node `WhatsApp Webhook`.
+
+**3. Cek device Fonnte terhubung.** Panel Fonnte → status device harus `connected`.
+Jika `disconnected`, pindai ulang QR.
+
+**4. Lihat riwayat eksekusi.** n8n → **Executions**. Jika kosong, webhook tidak pernah
+menerima apa pun — masalah ada di sisi Fonnte atau jaringan.
+
+**5. Self-host: cek `WEBHOOK_URL`.** Bila salah, n8n menampilkan URL yang tidak bisa
+dijangkau dari luar. Harus URL publik dan diakhiri garis miring.
+
+---
+## Error 429 / rate limit
+
+**Dari Groq:** kuota gratis habis. Tunggu reset atau upgrade.
+**Dari Fonnte:** melebihi batas pesan paket Anda.
+
+Kedua node HTTP sudah retry 3×, tapi retry tidak menolong bila kuota memang habis.
 
 ---
 
-## Sebelum Commit Perubahan Workflow
+## Error 401 / 403
 
-Export n8n memuat data spesifik instance Anda. **Wajib** disanitasi:
+Credential bermasalah:
 
-```bash
-python3 ../scripts/sanitize-workflow.py export-mentah.json workflows/manajemen-stok-sayur-wa-pin.n8n.json
-python3 ../scripts/validate-workflow.py workflows/manajemen-stok-sayur-wa-pin.n8n.json
-```
+| Layanan | Penyebab umum |
+|---|---|
+| Fonnte | Token salah, atau header bukan `Authorization` |
+| Google | OAuth kedaluwarsa/dicabut, atau API belum aktif |
+| Groq | API key salah atau sudah dihapus |
 
 ---
 
-## Dokumentasi Terkait
+## Masih bermasalah?
 
-- Penjelasan tiap node → [`../docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md)
-- Format spreadsheet → [`../docs/SPREADSHEET.md`](../docs/SPREADSHEET.md)
-- Masalah umum → [`../docs/TROUBLESHOOTING-CHATBOT.md`](../docs/TROUBLESHOOTING-CHATBOT.md)
+- Screenshot riwayat eksekusi n8n (**sensor token & nomor telepon**)
+- Versi n8n
+- Cloud atau self-host
+
+⚠️ **Jangan tempel token, API key, atau nomor WhatsApp** ke dalam issue publik.
+
+
