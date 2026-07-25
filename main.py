@@ -4,7 +4,6 @@ main.py — TIMBANGAN IOT TERINTEGRASI (Berat + Jenis Sayur)
 Raspberry Pi 4 · HX711 · LCD I2C 16x2 · USB Webcam · YOLOv5n TFLite FP16
 
 Semua dibaca dari scripts/common.py → environment / file .env.
-
     • inisialisasi GPIO
     • LCD I2C 16x2 (satu-satunya penulis LCD ada di thread_lcd_refresh)
     • push button + debounce
@@ -19,7 +18,7 @@ Logika detail ada di modul terpisah:
 
 Jalankan:
     cp .env.example .env && nano .env      # isi GOOGLE_SHEETS_SCRIPT_ID
-    python3 main.py
+    python main.py
 """
 
 import sys
