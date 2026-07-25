@@ -90,13 +90,3 @@ Credential bermasalah:
 | Groq | API key salah atau sudah dihapus |
 
 ---
-
-## Masih bermasalah?
-
-- Screenshot riwayat eksekusi n8n (**sensor token & nomor telepon**)
-- Versi n8n
-- Cloud atau self-host
-
-⚠️ **Jangan tempel token, API key, atau nomor WhatsApp** ke dalam issue publik.
-
-
