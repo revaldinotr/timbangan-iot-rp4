@@ -69,15 +69,12 @@ menerima apa pun — masalah ada di sisi Fonnte atau jaringan.
 **5. Self-host: cek `WEBHOOK_URL`.** Bila salah, n8n menampilkan URL yang tidak bisa
 dijangkau dari luar. Harus URL publik dan diakhiri garis miring.
 
----
 ## Error 429 / rate limit
 
 **Dari Groq:** kuota gratis habis. Tunggu reset atau upgrade.
 **Dari Fonnte:** melebihi batas pesan paket Anda.
 
 Kedua node HTTP sudah retry 3×, tapi retry tidak menolong bila kuota memang habis.
-
----
 
 ## Error 401 / 403
 
