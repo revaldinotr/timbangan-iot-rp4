@@ -70,26 +70,28 @@ Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX7
 **Struktur Proyek**
 ```
 Timbangan-IoT/
-├── firmware/                  # Kode Python yang berjalan di Raspberry Pi CM4
-│   ├── main.py                # Program utama terintegrasi (berat + jenis + LCD + kirim)
-│   ├── thread_berat.py        # Thread pembacaan berat (HX711 + filter Stable Lock)
-│   ├── thread-jenis.py        # Thread deteksi jenis sayur (YOLOv5 TFLite + webcam)
-│   ├── kalibrasi.py           # Skrip kalibrasi load cell (menentukan CALIBRATION_FACTOR)
-│   └── uji_sistem.py          # Program uji akurasi, presisi & stabilitas
+├── IoT/
+│   └── apps-scripts/
+│       ├── pb_to_sheets.gs          # Google Apps Script (doPost → Sheets + foto ke Drive)
+│   └── n8n/
+│   └── workflow/
+│       ├── manajemen-stok-sayur-wa-pin.n8n.json          # Workflow n8n chatbot WhatsApp + PIN
 ├── model/
 │   └── best-fp16.tflite       # Model YOLOv5n hasil konversi TFLite FP16
-├── cloud/
-│   ├── pb_to_sheets.gs        # Google Apps Script (doPost → Sheets + foto ke Drive)
-│   └── n8n/
-│       └── manajemen-stok-sayur-whatsapp-pin.json   # Workflow n8n chatbot WhatsApp + PIN
-├── hardware/                  # Skematik, PCB, dan diagram pengawatan (file desain)
+├── captures/                  # photo data is stored here
+├── logs/                  # script log is stored here
 ├── docs/
-│   ├── laporan/               # Laporan akhir kedua subsistem (.docx)
 │   └── images/
 │       ├── diagram/           # Diagram blok & flowchart
 │       ├── wiring/            # Skematik, pengawatan, desain PCB
 │       ├── alat/              # Sketsa 3D & foto fisik alat
 │       └── hasil/             # Grafik pengujian, deteksi, chatbot, spreadsheet
+├── scripts/                  # Kode Python yang berjalan di Raspberry Pi CM4
+│   ├── thread_berat.py        # Thread pembacaan berat (HX711 + filter Stable Lock)
+│   ├── thread-jenis.py        # Thread deteksi jenis sayur (YOLOv5 TFLite + webcam)
+│   ├── kalibrasi.py           # Skrip kalibrasi load cell (menentukan CALIBRATION_FACTOR)
+│   └── uji_sistem.py          # Program uji akurasi, presisi & stabilitas
+├── main.py                # Program utama terintegrasi (berat + jenis + LCD + kirim)
 └── README.md
 ```
 **Alur pelatihan model deteksi jenis sayur (subsistem computer vision):**
@@ -178,8 +180,9 @@ Jalankan `sudo raspi-config` untuk mengaktifkan **SSH** dan antarmuka **I2C**/SP
 
 **12. Jalankan program utama**:
     ```bash
-    python3 main.py
+    python main.py
     ```
+    
     Catatan: setelah perangkat menyala, seluruh layanan (boot OS, script py, container n8n, Cloudflare Tunnel) membutuhkan ±2 menit hingga chatbot siap merespons.
 
 ---
