@@ -36,60 +36,8 @@ Salin **Deployment ID** dari URL hasil deploy:
 https://script.google.com/macros/s/<INI_DEPLOYMENT_ID>/exec
 ```
 
-Masukkan ke `GAS_SCRIPT_ID` di `device/.env`.
-
 > "Anyone" memang diperlukan agar Raspberry Pi dapat mengirim tanpa alur OAuth.
-> Token bersama pada langkah 3 yang menggantikan fungsi autentikasi.
-
-### 4. Uji
-
-Di editor Apps Script, jalankan fungsi `testScript()`. Google akan meminta izin
-akses Drive dan Spreadsheet pada eksekusi pertama.
-
-Periksa hasilnya: satu baris baru di sheet, dan satu berkas di folder Drive
-`Captures Data Sayur`.
-
----
-
-## Skema Payload
-
-```json
-{
-  "berat":      "3.39",
-  "jenis":      "tomat",
-  "filename":   "capture_1747000000.jpg",
-  "imageData":  "<base64 JPEG>",
-  "folderName": "Captures Data Sayur",
-  "token":      "<SHARED_TOKEN bila diaktifkan>"
-}
-```
-
-Respons sukses:
-
-```json
-{
-  "status":    "OK",
-  "timestamp": "2026-05-16 23:21:05",
-  "fileUrl":   "https://drive.google.com/file/d/.../view",
-  "fileId":    "..."
-}
-```
-
-Respons ditolak:
-
-```json
-{ "status": "ERROR", "message": "Unauthorized" }
-```
-
----
-
-## Endpoint GET (tanpa foto)
-
-Berguna untuk pengujian cepat dari peramban atau `curl`:
-
-```
-GET .../exec?berat=1.50&jenis=tomat&token=<SHARED_TOKEN>
-```
+> Masukan Deployment ID ke script main.py di perangkat Raspberry pi.
 
 ---
 
