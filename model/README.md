@@ -1,6 +1,6 @@
 ## Deskripsi
 
-Proyek ini menggunakan varian ringan **YOLOv5n** (nano) sebagai model dasar (*pretrained weights*), kemudian dilakukan *fine-tuning* pada dataset sayuran kustom. Seluruh alur kerja — mulai dari *training*, validasi, hingga ekspor model — dijalankan pada notebook Google Colab.
+Proyek ini menggunakan varian ringan **YOLOv5n** (nano) sebagai model dasar (*pretrained weights*), kemudian dilakukan *fine-tuning* pada dataset sayuran kustom. Seluruh tahapan pengembangan model, mulai dari proses *training*, validasi kinerja, hingga ekspor model ke format implementasi, dilaksanakan menggunakan lingkungan Google Colab.
 
 Spesifikasi lingkungan pelatihan:
 
