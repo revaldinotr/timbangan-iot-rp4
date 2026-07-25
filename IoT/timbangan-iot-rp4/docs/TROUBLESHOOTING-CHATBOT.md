@@ -19,50 +19,6 @@ dijangkau dari luar. Harus URL publik dan diakhiri garis miring.
 
 ---
 
-## Bot membalas dirinya sendiri berulang-ulang
-
-Node `Bukan Echo Bot?` tidak berfungsi. Pastikan Fonnte mengirim field `body.device`.
-Bila payload Anda memakai nama field berbeda, sesuaikan kondisi node tersebut.
-
-Segera **nonaktifkan workflow** untuk menghentikan konsumsi kuota.
-
----
-
-## PIN selalu ditolak
-
-**Cek 1 — env terbaca?** Tambahkan sementara di awal node `Cek Status Sesi PIN`:
-
-```js
-console.log('PIN dari env:', process.env.STOK_PIN);
-```
-
-Lihat log eksekusi. Jika `undefined`, env tidak terbaca.
-
-**Cek 2 — akses env diblokir?** Self-host butuh:
-
-```
-N8N_BLOCK_ENV_ACCESS_IN_NODE=false
-```
-
-**Cek 3 — spasi tersembunyi.** Kode memakai `.trim()` pada pesan, tapi nilai env bisa
-punya spasi. Periksa `.env` Anda.
-
-**Cek 4 — alurnya benar?** Harus `LOGIN` dulu, baru PIN. Mengirim PIN langsung tanpa
-`LOGIN` akan masuk ke state `NOT_LOGGED_IN`.
-
----
-
-## Sesi hilang terus / harus login berulang
-
-Sesi disimpan di **static data** n8n yang tersimpan di memori proses. Restart n8n =
-semua sesi hilang. Ini perilaku yang diketahui.
-
-Selain itu, static data tidak dibagi antar instance — bila menjalankan n8n dalam mode
-queue/multi-worker, sesi bisa tidak konsisten. Solusi jangka panjang: pindahkan sesi ke
-Redis (ada di roadmap).
-
----
-
 ## "DATA TIDAK TERSEDIA"
 
 **1. Sheet ID salah.** Pastikan `YOUR_GOOGLE_SHEET_ID` sudah diganti di **kedua** node:
@@ -99,16 +55,6 @@ sesuai desain.
 
 ---
 
-## Balasan berantakan di WhatsApp
-
-Bila muncul tabel dengan `|` atau tebal `**seperti ini**`, AI mengabaikan system prompt.
-
-- Pastikan system prompt di node `AI Agent` masih utuh
-- Turunkan `temperature` (coba `0.3`)
-- Model yang lebih kecil kadang kurang patuh pada instruksi format
-
----
-
 ## Balasan terpotong
 
 Batas 3900 karakter di `Sanitasi Output` memang disengaja. Bila sering terpotong,
@@ -139,9 +85,6 @@ Credential bermasalah:
 
 ## Masih bermasalah?
 
-Buka [issue](../../issues) dengan menyertakan:
-
-- Langkah reproduksi
 - Screenshot riwayat eksekusi n8n (**sensor token & nomor telepon**)
 - Versi n8n
 - Cloud atau self-host
