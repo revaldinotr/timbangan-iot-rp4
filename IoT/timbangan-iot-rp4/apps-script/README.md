@@ -21,26 +21,7 @@ Timestamps | Berat (Kg) | Jenis Sayur | Foto
 **Extensions → Apps Script**, hapus isi bawaan, tempel seluruh isi
 `pb_to_sheets.gs`, lalu simpan.
 
-### 3. Aktifkan token bersama (sangat disarankan)
-
-Buat token acak:
-
-```bash
-openssl rand -hex 24
-```
-
-**Project Settings → Script Properties → Add script property**
-
-| Property | Value |
-|---|---|
-| `SHARED_TOKEN` | token yang baru dibuat |
-
-Isi nilai yang **sama persis** pada `GAS_SHARED_TOKEN` di `device/.env`.
-
-> Tanpa langkah ini, endpoint Anda dapat ditulisi siapa pun yang mengetahui URL-nya.
-> Lihat [`../docs/SECURITY-NOTES.md`](../docs/SECURITY-NOTES.md).
-
-### 4. Deploy
+### 3. Deploy
 
 **Deploy → New deployment → Web app**
 
@@ -60,7 +41,7 @@ Masukkan ke `GAS_SCRIPT_ID` di `device/.env`.
 > "Anyone" memang diperlukan agar Raspberry Pi dapat mengirim tanpa alur OAuth.
 > Token bersama pada langkah 3 yang menggantikan fungsi autentikasi.
 
-### 5. Uji
+### 4. Uji
 
 Di editor Apps Script, jalankan fungsi `testScript()`. Google akan meminta izin
 akses Drive dan Spreadsheet pada eksekusi pertama.
