@@ -3,10 +3,8 @@
 main.py — TIMBANGAN IOT TERINTEGRASI (Berat + Jenis Sayur)
 Raspberry Pi 4 · HX711 · LCD I2C 16x2 · USB Webcam · YOLOv5n TFLite FP16
 
-AMAN DI-COMMIT KE GITHUB: tidak ada Script ID, token, atau kredensial apa pun
-di file ini. Semua dibaca dari scripts/common.py → environment / file .env.
+Semua dibaca dari scripts/common.py → environment / file .env.
 
-Tanggung jawab file ini HANYA orkestrasi:
     • inisialisasi GPIO
     • LCD I2C 16x2 (satu-satunya penulis LCD ada di thread_lcd_refresh)
     • push button + debounce
