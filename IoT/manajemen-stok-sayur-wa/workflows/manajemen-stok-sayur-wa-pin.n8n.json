@@ -1,0 +1,740 @@
+{
+  "name": "Manajemen Stok Sayur di Pasar Tradisional (WhatsApp + PIN)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1104,
+        4368
+      ],
+      "id": "40685998-2c8a-4478-97a6-d352e57907f2",
+      "name": "WhatsApp Webhook",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "check-text",
+              "leftValue": "={{ $json.body.message }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        -720,
+        4352
+      ],
+      "id": "193d5a81-e864-49d0-ad03-8b666a448312",
+      "name": "Has Text?",
+      "notes": "Hanya cek pesan tidak kosong. Field body.type TIDAK ADA di payload Fonnte (dihapus). Echo/device sudah disaring di node sebelumnya."
+    },
+    {
+      "parameters": {
+        "jsCode": "// ============================================================\n// NODE: Cek Status Sesi PIN\n// State machine login berbasis PIN, sesi disimpan di Static Data.\n// Perbaikan: PIN via env, pruning sesi kedaluwarsa, sliding session.\n// ============================================================\n\n// --- KONFIGURASI ---\nconst VALID_PIN = (typeof process !== 'undefined' && process.env && process.env.STOK_PIN)\n  ? String(process.env.STOK_PIN)\n  : '0000';                 // fallback; set env STOK_PIN untuk produksi\nconst SESSION_MINUTES = 60; // durasi sesi (menit)\nconst SLIDING_SESSION = true; // true = perpanjang sesi tiap aktivitas\n// --------------------\n\nconst webhookBody = $('WhatsApp Webhook').first().json.body;\nconst userMessage = (webhookBody.message || webhookBody.pesan || '').trim();\nconst sender      = webhookBody.sender || webhookBody.username || '';\nconst senderClean = sender.replace('@s.whatsapp.net', '').replace('@c.us', '');\n\nconst staticData = $getWorkflowStaticData('global');\nif (!staticData.sessions) staticData.sessions = {};\nconst sessions   = staticData.sessions;\nconst now        = Date.now();\nconst SESSION_MS = SESSION_MINUTES * 60 * 1000;\n\n// --- Pruning: hapus sesi yang sudah kedaluwarsa (cegah static data membengkak) ---\nfor (const key of Object.keys(sessions)) {\n  const s = sessions[key];\n  const loginExpired   = s.loginTime && (now - s.loginTime) >= SESSION_MS;\n  const stalePinWait   = s.waitingForPin && s.createdAt && (now - s.createdAt) >= (10 * 60 * 1000);\n  if ((!s.loginTime && !s.waitingForPin) || loginExpired || stalePinWait) {\n    delete sessions[key];\n  }\n}\n\nconst sessionKey  = senderClean;\nconst userSession = sessions[sessionKey] || null;\nconst isLoggedIn  = userSession && userSession.loginTime && (now - userSession.loginTime) < SESSION_MS;\n\nconst isLoginCommand  = userMessage.toUpperCase() === 'LOGIN';\nconst isWaitingForPin = userSession && userSession.waitingForPin === true;\nconst isPinInput      = isWaitingForPin && !isLoginCommand;\n\n// [CASE 1] Sudah login & sesi valid -> teruskan ke AI\nif (isLoggedIn && !isLoginCommand) {\n  if (SLIDING_SESSION) {\n    sessions[sessionKey] = { waitingForPin: false, loginTime: now };\n  }\n  return [{ json: {\n    state: 'AUTHENTICATED',\n    userMessage, sender, senderClean,\n    session: webhookBody.session,\n    botNumber: webhookBody.botNumber\n  }}];\n}\n\n// [CASE 2] Ketik LOGIN -> minta PIN\nif (isLoginCommand) {\n  sessions[sessionKey] = { waitingForPin: true, loginTime: null, createdAt: now };\n  return [{ json: {\n    state: 'WAITING_PIN',\n    replyMessage: '🔒 Silakan masukkan PIN Anda untuk mengakses data:',\n    sender, senderClean\n  }}];\n}\n\n// [CASE 3] Sedang menunggu PIN -> validasi\nif (isPinInput) {\n  if (userMessage === VALID_PIN) {\n    sessions[sessionKey] = { waitingForPin: false, loginTime: now };\n    return [{ json: {\n      state: 'LOGIN_SUCCESS',\n      replyMessage: `✅ *Login berhasil!*\\n\\nSelamat datang di Asisten Stok Sayur 🥬\\nSesi Anda aktif selama ${SESSION_MINUTES} menit.\\n\\nSilakan tanyakan data stok, harga, atau informasi lainnya.`,\n      sender, senderClean\n    }}];\n  } else {\n    delete sessions[sessionKey];\n    return [{ json: {\n      state: 'WRONG_PIN',\n      replyMessage: '❌ PIN salah. Silakan ketik *LOGIN* untuk mencoba lagi.',\n      sender, senderClean\n    }}];\n  }\n}\n\n// [CASE 4] Belum login & tidak ketik LOGIN\nreturn [{ json: {\n  state: 'NOT_LOGGED_IN',\n  replyMessage: '🔐 Anda belum login.\\n\\nKetik *LOGIN* untuk memulai, lalu masukkan PIN Anda.',\n  sender, senderClean\n}}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -528,
+        4336
+      ],
+      "id": "fdbd2ada-707c-4a68-920c-8ac428fd7bba",
+      "name": "Cek Status Sesi PIN",
+      "notes": "State machine login PIN. PIN dari env STOK_PIN (fallback 0000). Sesi kedaluwarsa dibersihkan otomatis. Sliding session aktif."
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "check-authenticated",
+              "leftValue": "={{ $json.state }}",
+              "rightValue": "AUTHENTICATED",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        -320,
+        4336
+      ],
+      "id": "bc7dcd9a-cd6c-4df8-87a1-b2bb165789be",
+      "name": "Sudah Login?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.fonnte.com/send",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "target",
+              "value": "={{ $json.senderClean }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $json.replyMessage }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -160,
+        4512
+      ],
+      "id": "e59e6abc-228e-4443-9b96-39a36fd6f5a5",
+      "name": "Balas Pesan Auth",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "",
+          "name": "Header Auth account"
+        }
+      },
+      "continueOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://sheets.googleapis.com/v4/spreadsheets/YOUR_GOOGLE_SHEET_ID/values/Sheet1",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -160,
+        4320
+      ],
+      "id": "a82b9e4b-1c48-4919-9cc4-18f66d39c04d",
+      "name": "Ambil Data Sheets",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "",
+          "name": "Google Sheets account"
+        }
+      },
+      "continueOnFail": true,
+      "onError": "continueRegularOutput",
+      "notes": "Ambil seluruh isi Sheet1. onError=continueRegularOutput agar kegagalan API tidak menghentikan workflow; Format Data akan menampilkan pesan data tidak tersedia."
+    },
+    {
+      "parameters": {
+        "jsCode": "// Gabungkan data tampilan (FORMATTED) + formula (untuk link foto).\nconst formatted  = $('Ambil Data Sheets').first().json;   // FORMATTED_VALUE\nlet formula = {};\ntry { formula = $('Ambil Link Foto').first().json; } catch (e) { formula = {}; }\nconst pinData     = $('Cek Status Sesi PIN').first().json;\nconst webhookBody = $('WhatsApp Webhook').first().json.body;\nconst userMessage = pinData.userMessage || '';\nconst chatId      = pinData.sender || null;\nconst senderClean = pinData.senderClean || null;\n\nfunction extractFileId(cell) {\n  if (!cell || typeof cell !== 'string') return null;\n  let m = cell.match(/\\/d\\/([-\\w]{20,})/);     // HYPERLINK .../file/d/ID/view\n  if (m) return m[1];\n  m = cell.match(/[?&]id=([-\\w]{20,})/);         // IMAGE .../uc?...id=ID\n  if (m) return m[1];\n  m = cell.match(/([-\\w]{25,})/);                // fallback token panjang\n  return m ? m[1] : null;\n}\n\nlet dataText = 'DATA TIDAK TERSEDIA';\nconst photoMap = [];\ntry {\n  const rows  = (formatted && formatted.values) ? formatted.values : [];\n  const fRows = (formula && formula.values) ? formula.values : [];\n  if (rows.length > 0) {\n    const headers = rows[0] || [];\n    const lc = headers.map(h => String(h).toLowerCase());\n    let fotoIdx  = lc.findIndex(h => h.includes('foto'));\n    if (fotoIdx < 0) fotoIdx = headers.length - 1;\n    const sayurIdx = lc.findIndex(h => h.includes('sayur'));\n    let beratIdx   = lc.findIndex(h => h.includes('berat') || h.includes('kg'));\n    let waktuIdx   = lc.findIndex(h => h.includes('time') || h.includes('stamp') || h.includes('tanggal'));\n    if (waktuIdx < 0) waktuIdx = 0;\n    const dataRows = rows.slice(1);\n\n    let t = 'DATA STOK SAYUR PASAR TRADISIONAL:\\n';\n    t += 'ID | ' + headers.filter((_, i) => i !== fotoIdx).join(' | ') + ' | Foto\\n';\n    t += '-'.repeat(60) + '\\n';\n\n    dataRows.forEach((row, i) => {\n      const id = i + 1;\n      const fCell = (fRows[i + 1] || [])[fotoIdx] || '';\n      const fileId = extractFileId(fCell);\n      const cols = headers\n        .map((_, c) => {\n          if (c === fotoIdx) return null;\n          let v = row[c];\n          if (v === undefined || v === null || String(v).trim() === '') {\n            v = (c === sayurIdx) ? '(tanpa nama)' : 'kosong';\n          }\n          return v;\n        })\n        .filter(v => v !== null);\n      t += id + ' | ' + cols.join(' | ') + ' | ' + (fileId ? 'Ada' : '-') + '\\n';\n      if (fileId) {\n        photoMap.push({\n          id, fileId,\n          sayur: sayurIdx >= 0 ? (row[sayurIdx] || '') : '',\n          berat: beratIdx >= 0 ? (row[beratIdx] || '') : '',\n          waktu: waktuIdx >= 0 ? (row[waktuIdx] || '') : ''\n        });\n      }\n    });\n    dataText = t;\n  } else if (formatted && formatted.error) {\n    dataText = 'GAGAL MENGAMBIL DATA: ' + (formatted.error.message || 'Error tidak diketahui');\n  }\n} catch (e) {\n  dataText = 'ERROR PARSING DATA: ' + e.message;\n}\n\nreturn [{\n  json: {\n    userMessage,\n    sheetsContext: dataText,\n    chatId, senderClean,\n    photoMap,\n    session: webhookBody.session,\n    botNumber: webhookBody.botNumber\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        288,
+        4320
+      ],
+      "id": "dcf77205-6f9e-46e9-a251-178e1ffd1b7c",
+      "name": "Format Data"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=DATA SPREADSHEET TERKINI:\n{{ $json.sheetsContext }}\n\n---\nPERTANYAAN USER:\n{{ $json.userMessage }}",
+        "options": {
+          "systemMessage": "Kamu adalah asisten manajemen stok sayur pasar tradisional. Data spreadsheet terkini selalu disertakan di tiap pesan sebagai tabel teks (kolom: ID, Timestamps, Berat (Kg), Jenis Sayur, Foto). Gunakan HANYA data itu untuk menjawab. Jangan mengarang; jika data tidak ada, katakan apa adanya. Ingat konteks percakapan. Jawab dalam bahasa yang sama dengan pengguna.\n\n=== ATURAN FORMAT WHATSAPP (WAJIB) ===\nBalasan tampil di WhatsApp, yang TIDAK mendukung tabel, judul markdown (#), atau link markdown. Karena itu:\n- JANGAN PERNAH membuat tabel dengan tanda pipa ( | ) atau garis pemisah (---). Itu tampil berantakan.\n- Tebal pakai SATU bintang: *teks* (bukan **teks**). Miring pakai _teks_.\n- Buat daftar dengan tanda '- ' di awal baris, satu item per baris.\n- Beri jarak antarbagian dengan satu baris kosong agar mudah dibaca.\n- Boleh memakai emoji secukupnya sebagai penanda (mis. 🥬 📦 ⚖️ 📅 ✅), jangan berlebihan.\n\n=== CARA MENYAJIKAN DATA STOK ===\n- Mulai dengan satu kalimat pembuka singkat yang menjawab pertanyaan.\n- Tampilkan tiap entri dalam SATU baris ringkas yang mudah dipindai, contoh:\n  - *Tomat* — 3,39 Kg · 2026-05-16 23:21 · ID 5\n- Kelompokkan per jenis sayur HANYA bila membantu; jika satu jenis, langsung list saja.\n- JANGAN menampilkan kolom yang nilainya 'kosong' atau 0 sebagai data utama. Jika Berat = 0 atau   kosong, jangan tulis '0 kg' berulang; cukup tulis '(berat belum dicatat)' bila relevan, atau   abaikan kolom berat untuk entri itu.\n- Jika Jenis Sayur '(tanpa nama)', sebut '(jenis belum dicatat)'. Jangan membuat kategori 'Lain-lain'   yang membingungkan.\n- Bila banyak entri, akhiri dengan ringkasan: jumlah entri dan total berat per jenis (mis.   'Total: Tomat 23,5 Kg (2 entri), Wortel 5,11 Kg (1 entri)'). Lewati jenis yang beratnya 0.\n- Jika data untuk yang diminta tidak ada, katakan dengan jelas dan ramah, jangan memaksakan format.\n\n=== PENGIRIMAN FOTO ===\nJika user minta dikirimi foto (mis. 'kirim foto tomat', 'foto stok terberat'), tentukan SEMUA baris yang sesuai DAN yang kolom Fotonya 'Ada'. Tulis balasan teks normal untuk user, lalu di BARIS PALING AKHIR tambahkan penanda persis: [[SEND_PHOTOS: id1,id2]] berisi ID baris terkait. Penanda ini akan dihapus otomatis sebelum dikirim — jangan jelaskan ke user. Jangan tulis penanda bila user tidak minta foto atau tidak ada baris cocok berfoto. Jangan menampilkan link Drive sendiri; sistem yang menanganinya.\n\nSelalu utamakan jawaban yang akurat, ringkas, dan enak dibaca di layar HP."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        464,
+        4320
+      ],
+      "id": "2122befa-9335-4508-ae11-f998855ff7b4",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+        "options": {
+          "temperature": 0.5
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        432,
+        4560
+      ],
+      "id": "fc8a563c-b84e-4461-9bed-9cb6416eb1f6",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('WhatsApp Webhook').first().json.body.sender }}",
+        "contextWindowLength": 6
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        608,
+        4560
+      ],
+      "id": "53aeec0a-b19e-4cfa-8f24-8d5c8236ce3d",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Bersihkan output AI + ekstrak penanda [[SEND_PHOTOS: ...]]\nlet output = '';\ntry { output = $input.first().json.output || ''; } catch (e) { output = ''; }\noutput = String(output).trim();\n\nlet photoIds = [];\nconst m = output.match(/\\[\\[\\s*SEND_PHOTOS\\s*:\\s*([0-9,\\s]+)\\]\\]/i);\nif (m) {\n  photoIds = m[1].split(',').map(s => parseInt(s.trim(), 10)).filter(n => !isNaN(n));\n  output = output.replace(m[0], '').trim();\n}\n\nif (!output) output = 'Baik, permintaan Anda saya proses.';\nconst MAX_LEN = 3900;\nif (output.length > MAX_LEN) output = output.slice(0, MAX_LEN) + '\\n\\n…(pesan dipotong)';\n\nconst chatId      = $('Format Data').first().json.chatId || null;\nconst senderClean = $('Format Data').first().json.senderClean || null;\n\nreturn [{\n  json: {\n    safeOutput: output,\n    chatId, senderClean,\n    hasWhatsApp: senderClean !== null && senderClean !== '',\n    photoIds\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        800,
+        4320
+      ],
+      "id": "a3594358-3318-4a37-8b61-7f987add417d",
+      "name": "Sanitasi Output"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "check-chatid",
+              "leftValue": "={{ $json.senderClean }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        976,
+        4320
+      ],
+      "id": "a170fa15-70eb-4711-b7d9-04574cebd4f9",
+      "name": "Ada Chat ID?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.fonnte.com/send",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "target",
+              "value": "={{ $json.senderClean }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $json.safeOutput }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1248,
+        4304
+      ],
+      "id": "efb1d614-4ce2-4a0c-a13e-e40d2969d65c",
+      "name": "Kirim ke WhatsApp",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "",
+          "name": "Header Auth account"
+        }
+      },
+      "continueOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.fonnte.com/send",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "target",
+              "value": "={{ $('WhatsApp Webhook').first().json.body.sender }}"
+            },
+            {
+              "name": "message",
+              "value": "Maaf, pesan Anda tidak dapat diproses (pesan kosong atau bukan teks). Silakan kirim pertanyaan dalam bentuk teks."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -512,
+        4528
+      ],
+      "id": "0e7fdbca-bfc6-42ee-8ab6-5afc40f179ad",
+      "name": "Balas Pesan Tidak Valid",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "",
+          "name": "Header Auth account"
+        }
+      },
+      "continueOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "sender-not-empty",
+              "leftValue": "={{ $json.body.sender }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "not-own-device",
+              "leftValue": "={{ $json.body.sender }}",
+              "rightValue": "={{ $json.body.device }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "513cac2a-1bac-4026-bd56-2cd0004768ad",
+      "name": "Bukan Echo Bot?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        -928,
+        4368
+      ],
+      "notes": "Buang event milik device sendiri / sender kosong (status update, echo) agar tidak terjadi loop balasan."
+    },
+    {
+      "parameters": {},
+      "id": "4d12c2c6-237a-4e85-a1f4-b47e1fc1504d",
+      "name": "Abaikan Event",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        4704
+      ],
+      "notes": "Stop diam-diam. Tidak membalas event non-user (echo/status) untuk mencegah loop & hemat kuota Fonnte."
+    },
+    {
+      "parameters": {
+        "url": "https://sheets.googleapis.com/v4/spreadsheets/YOUR_GOOGLE_SHEET_ID/values/Sheet1?valueRenderOption=FORMULA",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "options": {}
+      },
+      "id": "76f4f3a5-eba9-4ceb-9eb2-6a58750af891",
+      "name": "Ambil Link Foto",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        64,
+        4320
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "",
+          "name": "Google Sheets account"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "notes": "Baca sheet mode FORMULA untuk mengekstrak link Google Drive di kolom Foto (mode FORMATTED_VALUE mengembalikan sel kosong untuk formula IMAGE/HYPERLINK)."
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "has-photo-ids",
+              "leftValue": "={{ ($json.photoIds || []).length > 0 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c877f48a-6a94-4fe3-8a3f-ce2297c0d2fb",
+      "name": "Ada Foto Diminta?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        976,
+        4528
+      ],
+      "notes": "TRUE bila AI menandai ada foto untuk dikirim."
+    },
+    {
+      "parameters": {
+        "jsCode": "// Susun SATU pesan teks berisi link Drive (paket gratis tidak bisa kirim media).\nconst photoIds    = $json.photoIds || [];\nconst senderClean = $('Format Data').first().json.senderClean || $json.senderClean || '';\nconst photoMap    = $('Format Data').first().json.photoMap || [];\nconst byId = {};\nphotoMap.forEach(p => { byId[p.id] = p; });\n\nconst MAX_PHOTOS = 25; // pengaman\nconst ids = photoIds.slice(0, MAX_PHOTOS);\n\nconst lines = [];\nlet n = 0;\nfor (const id of ids) {\n  const p = byId[id];\n  if (!p) continue;\n  n++;\n  const link  = 'https://drive.google.com/file/d/' + p.fileId + '/view';\n  const label = (p.sayur || 'Foto')\n    + (p.berat ? ' (' + p.berat + ' Kg)' : '')\n    + (p.waktu ? ' — ' + p.waktu : '');\n  lines.push(`${n}. ${label}\\n${link}`);\n}\n\nlet message;\nif (lines.length === 0) {\n  message = 'Maaf, foto untuk permintaan itu tidak ditemukan.';\n} else {\n  message = '📷 Link foto yang diminta:\\n\\n' + lines.join('\\n\\n');\n}\n\nconst MAX_LEN = 3900;\nif (message.length > MAX_LEN) message = message.slice(0, MAX_LEN) + '\\n\\n…(daftar dipotong)';\n\nreturn [{ json: { target: senderClean, message } }];"
+      },
+      "id": "aabc8fac-5216-4637-9151-a5c98c98f8d8",
+      "name": "Siapkan Item Foto",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1232,
+        4512
+      ],
+      "notes": "Bangun SATU pesan teks berisi link Drive (view). Cocok untuk paket Fonnte gratis (media via url tidak didukung)."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.fonnte.com/send",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "target",
+              "value": "={{ $json.target }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $json.message }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f4a69e2a-e5d2-4e07-9abf-fc5559703597",
+      "name": "Kirim Foto ke WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1456,
+        4512
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "",
+          "name": "Header Auth account"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "notes": "Kirim link foto sebagai TEKS (bukan media). Aman untuk paket Fonnte gratis."
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "WhatsApp Webhook": {
+      "main": [
+        [
+          {
+            "node": "Bukan Echo Bot?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Text?": {
+      "main": [
+        [
+          {
+            "node": "Cek Status Sesi PIN",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Balas Pesan Tidak Valid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cek Status Sesi PIN": {
+      "main": [
+        [
+          {
+            "node": "Sudah Login?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sudah Login?": {
+      "main": [
+        [
+          {
+            "node": "Ambil Data Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Balas Pesan Auth",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ambil Data Sheets": {
+      "main": [
+        [
+          {
+            "node": "Ambil Link Foto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Data": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Sanitasi Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sanitasi Output": {
+      "main": [
+        [
+          {
+            "node": "Ada Chat ID?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Ada Foto Diminta?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ada Chat ID?": {
+      "main": [
+        [
+          {
+            "node": "Kirim ke WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bukan Echo Bot?": {
+      "main": [
+        [
+          {
+            "node": "Has Text?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Abaikan Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ambil Link Foto": {
+      "main": [
+        [
+          {
+            "node": "Format Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ada Foto Diminta?": {
+      "main": [
+        [
+          {
+            "node": "Siapkan Item Foto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Siapkan Item Foto": {
+      "main": [
+        [
+          {
+            "node": "Kirim Foto ke WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "tags": []
+}
