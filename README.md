@@ -89,7 +89,6 @@ timbangan-iot-rp4/
 │       ├── hasil/                   # Grafik pengujian, deteksi, chatbot, spreadsheet
 │       └── penulis/                 # Foto penulis
 ├── scripts/                         # Kode Python yang berjalan di Raspberry Pi CM4
-│   ├── __init__.py                  # Penanda paket Python
 │   ├── common.py                    # Konfigurasi + logger + shared state antar-thread
 │   ├── thread_berat.py              # Thread pembacaan berat (HX711 + filter Stable Lock), tanpa IoT
 │   ├── thread_jenis.py              # Thread deteksi jenis sayur (YOLOv5 TFLite + webcam), tanpa IoT
