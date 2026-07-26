@@ -72,7 +72,7 @@ Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX7
 **Struktur Proyek**
 ```
 timbangan-iot-rp4/
-├── IoT/                             # Artefak sisi cloud (bukan kode Raspberry Pi)
+├── IoT/                             # Konfigurasi sisi cloud (bukan kode Raspberry Pi)
 │   ├── apps-script/
 │   │   └── pb_to_sheets.gs          # Google Apps Script (doPost → Sheets + foto ke Drive)
 │   └── n8n/
@@ -110,7 +110,7 @@ timbangan-iot-rp4/
 
 | Modul | Peran | Jaringan | Hardware |
 |---|---|:---:|---|
-| `main.py` | Orkestrasi: GPIO, LCD, splash, push button, start/stop thread | – | GPIO, LCD I2C |
+| `main.py` | Program GPIO, LCD, splash, push button, start/stop thread | – | GPIO, LCD I2C |
 | `scripts/common.py` | Konfigurasi, logger, shared state, sinyal antar-thread | – | – |
 | `scripts/thread_berat.py` | Akuisisi berat + filter Stable Lock | – | HX711 |
 | `scripts/thread_jenis.py` | Inferensi YOLOv5n + capture foto lokal | – | Webcam |
