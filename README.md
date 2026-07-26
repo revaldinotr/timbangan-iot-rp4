@@ -159,7 +159,7 @@ Model divalidasi (menghasilkan metrik seperti mAP, *precision*, *recall* per kel
 
 ## Konfigurasi & Keamanan
 
-Seluruh parameter sistem terpusat di `scripts/common.py`, namun **nilai rahasia tidak ditulis di dalam kode**. Script ID Google Apps Script dibaca dari *environment variable* melalui berkas `.env` yang diblokir oleh `.gitignore`, sehingga repositori aman dipublikasikan.
+Script ID Google Apps Script dibaca dari *environment variable* melalui berkas `.env` yang diblokir oleh `.gitignore`.
 
 ```bash
 cp .env.example .env
@@ -175,7 +175,7 @@ Isi minimal yang wajib diubah:
 
 Variabel opsional lain (pin GPIO, alamat LCD, resolusi kamera, ambang *confidence*, teks *splash* LCD) tersedia di `.env.example` beserta nilai bawaannya.
 
-Bila `GOOGLE_SHEETS_SCRIPT_ID` dibiarkan kosong, sistem tetap berjalan dalam **mode offline**: berat dan jenis tetap tampil di LCD serta foto tersimpan ke `captures/`, hanya proses unggah yang dilewati. Berkas `.env`, isi `captures/`, dan isi `logs/` tidak pernah ikut ter-*commit*.
+Bila `GOOGLE_SHEETS_SCRIPT_ID` dibiarkan kosong, sistem tetap berjalan dalam **mode offline**: berat dan jenis tetap tampil di LCD serta foto tersimpan ke `captures/`, hanya proses unggah yang dilewati.
 
 ---
 
