@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
 """
-scripts/IoT.py — Bagian pengiriman data & foto ke cloud (Google Apps Script).
-
-Satu-satunya modul yang menyentuh jaringan. Tidak menyentuh GPIO, LCD, HX711,
-maupun kamera — sehingga bisa diuji dari laptop mana pun tanpa hardware.
+Bagian pengiriman data & foto ke cloud (Google Apps Script).
 
 Endpoint & folder Drive dibaca dari scripts/common.py, yang mengambilnya dari
 environment variable / file .env. Kalau GOOGLE_SHEETS_SCRIPT_ID belum diisi,
-fungsi kirim menolak dengan pesan jelas — bukan crash.
+fungsi kirim menolak dengan pesan.
 
 Uji mandiri:
-    python3 scripts/IoT.py                      # kirim data uji tanpa foto
-    python3 scripts/IoT.py foto.jpg 1.25 tomat  # kirim dengan foto
+    python scripts/IoT.py                      # kirim data uji tanpa foto
+    python scripts/IoT.py foto.jpg 1.25 tomat  # kirim dengan foto
 """
 
 import os
