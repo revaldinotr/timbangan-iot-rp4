@@ -1,17 +1,12 @@
 #!/usr/bin/env python3
 """
-scripts/thread_jenis.py — Thread deteksi jenis sayur (YOLOv5 TFLite + webcam).
-
-TANPA IoT: modul ini hanya membaca kamera, menjalankan inferensi, dan menulis
+Thread deteksi jenis sayur (YOLOv5 TFLite + webcam).
+modul ini hanya membaca kamera, menjalankan inferensi, dan menulis
 hasilnya ke shared state. Fungsi `capture_frame()` menyimpan foto beranotasi
-ke disk secara LOKAL — pengirimannya ke cloud ditangani scripts/IoT.py.
-
-Catatan nama file: aslinya ditulis `thread-jenis.py`, tapi tanda hubung membuat
-modul tidak bisa di-import Python (`from scripts.thread-jenis import ...` dibaca
-sebagai operasi pengurangan), jadi dipakai garis bawah.
+ke disk secara LOKAL.
 
 Uji mandiri:
-    python3 scripts/thread_jenis.py
+    python scripts/thread_jenis.py
 """
 
 import os
