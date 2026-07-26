@@ -1,10 +1,8 @@
 <div align="center">
 
-# Smart IoT Vegetable Scale
+# Load Cell HX711 · YOLOv5n Edge AI · n8n Automation · Raspberry Pi CM4
 
-**Load Cell HX711 · YOLOv5n Edge AI · n8n Automation · Raspberry Pi CM4**
-
-An IoT digital scale that digitalizes the weighing of vegetable commodities in traditional markets — it weighs, recognizes, records, and reports, all by itself.
+The system acquires weight data using a **180 kg strain gauge load cell** paired with a 24-bit **HX711** ADC, automatically identifies the vegetable type (carrot, tomato, potato) with a **YOLOv5n** computer-vision model running on-device (edge computing, TFLite FP16), then records every transaction in real time to **Google Sheets** and delivers **AI-powered WhatsApp notifications and a chatbot** through an **n8n** automation workflow.
 
 <br>
 
@@ -20,31 +18,6 @@ An IoT digital scale that digitalizes the weighing of vegetable commodities in t
 <img src="docs/images/alat/hasil-perancangan-alat.png" alt="Final Device Design" width="420">
 
 </div>
-
----
-
-## Overview
-
-The system acquires weight data using a **180 kg strain gauge load cell** paired with a 24-bit **HX711** ADC, automatically identifies the vegetable type (carrot, tomato, potato) with a **YOLOv5n** computer-vision model running on-device (edge computing, TFLite FP16), then records every transaction in real time to **Google Sheets** and delivers **AI-powered WhatsApp notifications and a chatbot** through an **n8n** automation workflow.
-
-|  | Capability |
-|:---:|---|
-| ⚖️ | **Industrial-grade weighing** — trimmed median + rolling median + Stable Lock filter, just like a commercial scale |
-| 👁️ | **On-device vision** — YOLOv5n TFLite FP16 inference at 10–20 FPS, no cloud round-trip required |
-| ☁️ | **Automatic cloud logging** — weight, type, and a captured photo pushed to Google Sheets & Drive in 2–6 seconds |
-| 💬 | **AI stock assistant** — PIN-protected WhatsApp chatbot powered by Groq LLaMA 3.3 70B via n8n |
-| 🔌 | **Zero-touch operation** — systemd auto-boot, staged shutdown, and a graceful offline mode |
-
-### Results at a Glance
-
-| Metric | Result |
-|---|---:|
-| Weighing accuracy (1–30 kg) | **99.50 % – 99.98 %** |
-| Relative standard deviation (RSD) | **0.02 % – 0.52 %** |
-| Maximum drift (5–30 min constant load) | **0.01 – 0.02 kg** |
-| YOLOv5n validation mAP50 | **84.7 %** |
-| Real-time detection success rate | **80 %** (48/60) |
-| Cloud upload success rate | **86.7 %** (13/15), 2–6 s per upload |
 
 ---
 
