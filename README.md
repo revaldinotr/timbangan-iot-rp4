@@ -75,7 +75,7 @@ timbangan-iot-rp4/
 ├── IoT/                             # Konfigurasi sisi cloud (bukan kode Raspberry Pi)
 │   ├── apps-script/
 │   │   └── pb_to_sheets.gs          # Google Apps Script (doPost → Sheets + foto ke Drive)
-│   └── n8n/
+│   └── n8n/workflow/
 │       └── manajemen-stok-sayur-wa-pin.n8n.json   # Workflow chatbot WhatsApp + PIN
 ├── model/
 │   └── best-fp16.tflite             # Model YOLOv5n hasil konversi TFLite FP16
@@ -230,7 +230,7 @@ Instal Docker (`curl` installer, `sudo usermod -aG docker $USER`), jalankan cont
 
 **12. Import workflow n8n**
 
-Impor `IoT/n8n/manajemen-stok-sayur-wa-pin.n8n.json`, konfigurasi kredensial Fonnte API, Google Sheets, dan Groq.
+Impor `IoT/n8n/workflow/manajemen-stok-sayur-wa-pin.n8n.json`, konfigurasi kredensial Fonnte API, Google Sheets, dan Groq.
 
 **13. Verifikasi per subsistem** (opsional, sangat membantu saat *troubleshooting*):
 ```bash
