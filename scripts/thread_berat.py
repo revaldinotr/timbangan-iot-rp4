@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 """
-scripts/thread_berat.py — Thread pembacaan berat (HX711 + filter Stable Lock).
-
-TANPA IoT: modul ini murni membaca load cell dan menulis hasilnya ke shared
-state. Tidak ada request jaringan, tidak ada akses LCD, tidak ada kamera.
+Thread pembacaan berat (HX711 + filter Stable Lock).
+Modul ini murni membaca load cell dan menulis hasilnya ke shared
+state.
 
 Alur filter:
     sampel mentah → trimmed median → gerbang kestabilan (opsional) →
     deadband nol → rolling median → konfirmasi lompatan → STABLE LOCK
 
 Uji mandiri (di Raspberry Pi):
-    python3 scripts/thread_berat.py
+    python scripts/thread_berat.py
 """
 
 import os
