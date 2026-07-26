@@ -337,7 +337,7 @@ sudo systemctl start  timbangan-iot.service     # start it now
 ```bash
 systemctl status timbangan-iot.service          # check the service state
 ```
- for troublesooting:
+ for troubleshooting:
  
 ```bash
 sudo systemctl disable timbangan-iot.service    # Nonaktifkan auto-start boot
