@@ -71,7 +71,7 @@ Sistem menggunakan pendekatan **Input → Proses → Output**: *load cell* + HX7
 **Struktur Proyek**
 ```
 timbangan-iot-rp4/
-├── IoT/                             # Artefak sisi cloud (bukan kode Raspberry Pi)
+├── IoT/                             # Konfigurasi sisi cloud (bukan kode Raspberry Pi)
 │   ├── apps-script/
 │   │   └── pb_to_sheets.gs          # Google Apps Script (doPost → Sheets + foto ke Drive)
 │   └── n8n/
@@ -102,13 +102,13 @@ timbangan-iot-rp4/
 └── README.md
 ```
 
-> **Catatan penamaan:** folder `IoT/` berisi artefak yang di-*deploy* ke cloud (Apps Script & n8n), sedangkan `scripts/IoT.py` adalah klien Python di sisi Raspberry Pi yang mengirim data ke sana.
+> **Catatan penamaan:** folder `IoT/` berisi konfigurasi yang di-*deploy* ke cloud (Apps Script & n8n), sedangkan `scripts/IoT.py` adalah klien Python di sisi Raspberry Pi yang mengirim data ke sana.
 
 **Pembagian tanggung jawab modul**
 
 | Modul | Peran | Jaringan | Hardware |
 |---|---|:---:|---|
-| `main.py` | Orkestrasi: GPIO, LCD, splash, push button, start/stop thread | – | GPIO, LCD I2C |
+| `main.py` | Program Utama  memuat GPIO, LCD, splash, push button, start/stop thread | – | GPIO, LCD I2C |
 | `scripts/common.py` | Konfigurasi, logger, shared state, sinyal antar-thread | – | – |
 | `scripts/thread_berat.py` | Akuisisi berat + filter Stable Lock | – | HX711 |
 | `scripts/thread_jenis.py` | Inferensi YOLOv5n + capture foto lokal | – | Webcam |
