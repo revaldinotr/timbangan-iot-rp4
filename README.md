@@ -99,7 +99,6 @@ timbangan-iot-rp4/
 ├── main.py                          # Program utama terintegrasi (berat + jenis + LCD + kirim)
 ├── timbangan-iot.service            # Unit systemd untuk auto-boot saat perangkat menyala
 ├── .env.example                     # Template kredensial — salin jadi .env
-├── .gitignore
 ├── requirements.txt
 └── README.md
 ```
