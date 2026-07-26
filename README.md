@@ -466,21 +466,6 @@ The chatbot is able to:
 
 ---
 
-## Roadmap
-
-Directions for further development, as recommended in the final report:
-
-| Area | Planned Improvement |
-|---|---|
-| **Field validation** | Direct testing in a traditional market environment; load testing up to the full 180 kg capacity |
-| **Mechanics** | Vibration damping on the load cell mount |
-| **Compute** | Upgrade to a Raspberry Pi 5 (4–8 GB RAM) |
-| **Vision model** | Expand and balance the dataset (carrot & potato), apply focal loss, migrate to YOLOv8 / YOLOv11 |
-| **Reliability** | Local data queue for when the connection drops |
-| **Features** | Vegetable quality/freshness detection; web dashboard and mobile app for stock management |
-
----
-
 ## Contributing & License
 
 Contributions are welcome. Please fork this repository, create a feature branch, then submit a pull request.
