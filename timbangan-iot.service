@@ -1,0 +1,30 @@
+# ═══════════════════════════════════════════════════════════════════════
+#  timbangan-iot.service — auto-boot Timbangan IoT di Raspberry Pi CM4
+#
+#      sudo cp timbangan-iot.service /etc/systemd/system/
+#      sudo systemctl daemon-reload
+#      sudo systemctl enable timbangan-iot.service
+#      sudo systemctl start  timbangan-iot.service
+#
+#  Sesuaikan User, Group, WorkingDirectory, dan path venv bila berbeda.
+#  Cek dengan:  whoami   dan   pwd
+# ═══════════════════════════════════════════════════════════════════════
+
+[Unit]
+Description=Timbangan IoT Service
+After=network.target
+
+[Service]
+Type=simple
+User=ng
+Group=ng
+WorkingDirectory=/home/ng/timbangan-iot
+Environment="PATH=/home/ng/myproject/timbangan-iot/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/home/ng/myproject/timbangan-iot/bin/python /home/ng/timbangan-iot/main.py
+KillSignal=SIGINT
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
