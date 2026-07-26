@@ -104,7 +104,7 @@ timbangan-iot-rp4/
 └── README.md
 ```
 
-> **Catatan penamaan:** folder `IoT/` berisi artefak yang di-*deploy* ke cloud (Apps Script & n8n), sedangkan `scripts/IoT.py` adalah klien Python di sisi Raspberry Pi yang mengirim data ke sana.
+> **Catatan penamaan:** folder `IoT/` berisi konfigurasi yang di-*deploy* ke cloud (Apps Script & n8n), sedangkan `scripts/IoT.py` adalah klien Python di sisi Raspberry Pi yang mengirim data ke sana.
 
 **Pembagian tanggung jawab modul**
 
