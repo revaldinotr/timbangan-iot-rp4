@@ -159,7 +159,7 @@ Model divalidasi (menghasilkan metrik seperti mAP, *precision*, *recall* per kel
 
 ## Konfigurasi & Keamanan
 
-Script ID Google Apps Script dibaca dari *environment variable* melalui berkas `.env` yang diblokir oleh `.gitignore`.
+Script ID Google Apps Script dibaca dari *environment variable* melalui berkas `.env`.
 
 ```bash
 cp .env.example .env
