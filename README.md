@@ -363,7 +363,6 @@ sudo systemctl start  timbangan-iot.service     # start it now
 
 ```bash
 systemctl status timbangan-iot.service          # check the service state
-journalctl -u timbangan-iot.service -f          # follow the live logs
 ```
 
 ---
