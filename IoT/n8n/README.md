@@ -135,4 +135,3 @@ Open your browser and navigate to the subdomain you set up (e.g., `https://n8n.y
 Go through the initial setup process, enter your details, and you're ready to start building automations!
 
 ---
-*This tutorial was extracted from [Self-Hosting n8n on a Raspberry Pi](https://youtu.be/GPRj9N4C2fs?si=3hXMJZ2_741MAPm8).*
